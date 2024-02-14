@@ -2,7 +2,10 @@ package com.teris1.game.tetris.controller;
 
 import com.tetris1.game.tetris.model.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,25 +45,26 @@ public class GameController {
     }
 
     @RequestMapping(value = "/start")
-    public ModelAndView gameStart(HttpServletRequest req) {
+    public ModelAndView gameStart() {
 
         System.out.println("start");
-            currentSession = req.getSession(true);
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        currentSession =attr.getRequest().getSession(true);
+
+
             player = new Player().createPlayer();
         System.out.println(player.getPlayerName());
             state = State.initialState(player).start().newTetramino().orElse(State.initialState(player));
-            state.unSetPause();
-            currentSession.setAttribute("isGameOn", true);
-            currentSession.setAttribute("gameStatus", "Game is ON");
+            initiateView();
 
 
         return new ModelAndView("index");
     }
 
-    @RequestMapping(value = "/logic")
-    public ModelAndView gamePlay(HttpServletRequest req) {
-       // currentSession = req.getSession(true);
-        switch (Integer.parseInt(req.getParameter("click"))) {
+    @RequestMapping("/{moveId}")
+    public ModelAndView gamePlay(@PathVariable Integer moveId) {
+
+        switch (moveId) {
             case 0 -> {
                 if (GameController.state.tryMoveDown(State.stepDownArray[0]).isEmpty()) {
                     if (GameController.state.newTetramino().isEmpty()) {
@@ -77,23 +81,12 @@ public class GameController {
             case 3 -> GameController.state = GameController.state.tryMoveRight().orElse(GameController.state);
             case 4 -> GameController.state = GameController.state.tryDropDown().orElse(GameController.state);
         }
-        char[][] cells = GameController.state.stage.drawTetraminoOnCells();
-        currentSession.setAttribute("player", GameController.player.getPlayerName());
-        currentSession.setAttribute("score", GameController.player.getPlayerScore());
-        currentSession.setAttribute("bestplayer", Dao.bestPlayer);
-        currentSession.setAttribute("bestscore", Dao.bestScore);
-        currentSession.setAttribute("stepdown", State.stepDownArray[0]);
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 12; j++) {
-                currentSession.setAttribute(new StringBuilder("cells").append(i).append("v").append(j).toString(),
-                        new StringBuilder("/img/").append(cells[i][j]).append(".png").toString());
-            }
-        }
+        makeView();
         return new ModelAndView("index");
     }
 
     @RequestMapping(value = "/save")
-    public ModelAndView gameSave(HttpServletRequest req) throws IOException {
+    public ModelAndView gameSave() throws IOException {
         state.setPause();
         currentSession.setAttribute("isGameOn", false);
         SavedGame savedGame =
@@ -108,7 +101,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/restart")
-    public ModelAndView gameRestart(HttpServletRequest req) throws IOException {
+    public ModelAndView gameRestart() throws IOException {
         FileInputStream fileInputStream = new FileInputStream("C:\\JavaProjects\\2\\Tetris-New\\save.ser");
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
@@ -124,10 +117,19 @@ public class GameController {
             e.printStackTrace();
         }
         State.stepDownArray[0] = player.getPlayerScore() / 10 + 1;
-        char[][] cells = state.stage.drawTetraminoOnCells();
+        initiateView();
+        makeView();
+        return new ModelAndView("index");
+    }
+
+    private void initiateView(){
         currentSession.setAttribute("gameStatus", "Game is ON");
         currentSession.setAttribute("isGameOn", true);
         state.unSetPause();
+    }
+
+    private void makeView(){
+        char[][] cells = state.stage.drawTetraminoOnCells();
         currentSession.setAttribute("player", player.getPlayerName());
         currentSession.setAttribute("score", player.getPlayerScore());
         currentSession.setAttribute("bestplayer", Dao.bestPlayer);
@@ -139,7 +141,6 @@ public class GameController {
                         new StringBuilder("/img/").append(cells[i][j]).append(".png").toString());
             }
         }
-        return new ModelAndView("index");
     }
 
 

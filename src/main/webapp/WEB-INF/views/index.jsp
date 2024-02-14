@@ -363,19 +363,19 @@ document.onkeydown = function(e){
 
 
 function rotate() {
- window.location='/logic?click=1';
+ window.location='/1';
 }
 
 function left() {
-window.location='/logic?click=2';
+window.location='/2';
 }
 
 function right() {
- window.location='/logic?click=3';
+ window.location='/3';
 }
 
 function drop() {
-window.location='/logic?click=4';
+window.location='/4';
 }
 
 function newgame() {
@@ -392,7 +392,7 @@ function newgame() {
 
 
 function falldown() {
-         window.location='/logic?click=0';
+         window.location='/0';
     }
 
   var myTimer =setInterval(falldown, 500);
