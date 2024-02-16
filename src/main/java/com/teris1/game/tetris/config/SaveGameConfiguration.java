@@ -13,7 +13,6 @@ public class SaveGameConfiguration {
     @Bean
     @Scope("prototype")
     public SavedGame saveGame(Player player, State state) {
-        return new SavedGame(player.getPlayerName(), player.getPlayerScore(),
-                state.stage.getCells());
+        return new SavedGame(player.getPlayerName(), player.getPlayerScore(), state.stage.getCells());
     }
 }

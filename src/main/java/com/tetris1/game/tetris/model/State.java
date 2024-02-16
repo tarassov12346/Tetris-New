@@ -1,9 +1,11 @@
 package com.tetris1.game.tetris.model;
 
+import com.tetris1.game.tetris.model.service.GameLogic;
+
 import java.util.Objects;
 import java.util.Optional;
 
-public class State {
+public class State implements GameLogic<Optional<State> > {
     public final Stage stage;
     public final boolean isRunning;
     public final Player player;
@@ -45,40 +47,47 @@ public class State {
 
     public Optional<State> newTetramino() {
         final Tetramino t = Tetramino.getRandomTetramino();
-        final State newState = addTetraminoToState()
-                .collapseFullLayers()
+        final State newState = addTetramino().orElse(this)
+                .collapseFilledLayers().orElse(this)
                 .updatePlayerScore()
-                .setTetraminoToState(t, (Stage.WIDTH - t.getShape().length) / 2);
-
+                .setTetramino(t, (Stage.WIDTH - t.getShape().length) / 2,0).orElse(this);
         return !newState.checkCollision(0, 0, false) ? Optional.of(newState) : Optional.empty();
     }
 
     public Optional<State> restartWithNewTetramino() {
         final Tetramino t = Tetramino.getRandomTetramino();
-        final State newState = addTetraminoToState()
-
-                .setTetraminoToState(t, (Stage.WIDTH - t.getShape().length) / 2);
-
+        final State newState = addTetramino().orElse(this)
+                .setTetramino(t, (Stage.WIDTH - t.getShape().length) / 2,0).orElse(this);
         return !newState.checkCollision(0, 0, false) ? Optional.of(newState) : Optional.empty();
     }
 
-    public Optional<State> tryMoveLeft() {
+    @Override
+    public Optional<State> moveLeft() {
         return !checkCollision(-1, 0, false) ? Optional.of(moveTetraminoLeft()) : Optional.empty();
     }
 
-    public Optional<State> tryMoveRight() {
+
+
+
+    @Override
+    public Optional<State> moveRight() {
         return !checkCollision(1, 0, false) ? Optional.of(moveTetraminoRight()) : Optional.empty();
     }
 
-    public Optional<State> tryMoveDown(int stepDown) {
+    @Override
+    public Optional<State> moveDown(int step) {
         int yToStepDown;
-        for (yToStepDown = 0; (yToStepDown <= stepDown) && (yToStepDown < Stage.HEIGHT); yToStepDown++) {
+        for (yToStepDown = 0; (yToStepDown <= step) && (yToStepDown < Stage.HEIGHT); yToStepDown++) {
             if (checkCollision(0, yToStepDown, false)) break;
         }
         return !checkCollision(0, 1, false) ? Optional.of(moveTetraminoDown(yToStepDown - 1)) : Optional.empty();
     }
 
-    public Optional<State> tryDropDown() {
+
+
+
+
+    public Optional<State> dropDown() {
         int yToDropDown;
         for (yToDropDown = 0; yToDropDown < Stage.HEIGHT; yToDropDown++) {
             if (checkCollision(0, yToDropDown, false)) break;
@@ -86,9 +95,15 @@ public class State {
         return !checkCollision(0, yToDropDown - 1, false) ? Optional.of(moveTetraminoDown(yToDropDown - 1)) : Optional.empty();
     }
 
-    public Optional<State> tryRotate() {
+
+
+    @Override
+    public Optional<State> rotate() {
         return !checkCollision(0, 0, true) ? Optional.of(rotateTetramino()) : Optional.empty();
     }
+
+
+
 
     public void setPause() {
         stage.setPause();
@@ -98,23 +113,33 @@ public class State {
         stage.unSetPause();
     }
 
-    private State setTetraminoToState(Tetramino tetramino, int x) {
-        return new State(stage.setTetraminoToStage(tetramino, x, 0), isRunning, player);
+    @Override
+    public Optional<State> setTetramino(Tetramino tetramino, int x, int y) {
+        return Optional.of(new State(stage.setTetramino(tetramino, x, y), isRunning, player));
     }
 
-    private State addTetraminoToState() {
-        return new State(stage.addTetraminoToStage(), isRunning, player);
+
+
+    @Override
+    public Optional<State> addTetramino() {
+        return Optional.of(new State(stage.addTetramino(), isRunning, player));
     }
 
-    public State collapseFullLayers() {
 
-        return new State(stage.collapseFullLayers(), isRunning, player);
+
+
+    @Override
+    public Optional<State> collapseFilledLayers() {
+        return Optional.of(new State(stage.collapseFilledLayers(), isRunning, player));
     }
+
+
+
 
     private State updatePlayerScore() {
         player.setPlayerScore(stage.collapsedLayersCount);
         stepDownArray[0] = 1 + stage.collapsedLayersCount;
-        return new State(stage.collapseFullLayers(), isRunning, player);
+        return new State(stage.collapseFilledLayers(), isRunning, player);
     }
 
     private boolean checkCollision(int dx, int dy, boolean rotate) {
@@ -122,18 +147,20 @@ public class State {
     }
 
     private State moveTetraminoDown(int yToMoveDown) {
-        return new State(stage.moveTetraminoDown(yToMoveDown), isRunning, player);
+        return new State(stage.moveDown(yToMoveDown), isRunning, player);
     }
 
     private State moveTetraminoLeft() {
-        return new State(stage.moveTetraminoLeft(), isRunning, player);
+        return new State(stage.moveLeft(), isRunning, player);
     }
 
     private State moveTetraminoRight() {
-        return new State(stage.moveTetraminoRight(), isRunning, player);
+        return new State(stage.moveRight(), isRunning, player);
     }
 
     private State rotateTetramino() {
-        return new State(stage.rotateCcw(), isRunning, player);
+        return new State(stage.rotate(), isRunning, player);
     }
+
+
 }

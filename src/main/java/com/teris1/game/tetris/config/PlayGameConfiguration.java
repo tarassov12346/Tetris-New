@@ -13,31 +13,31 @@ public class PlayGameConfiguration {
     @Bean
     @Scope("prototype")
     public State dropDownState(State state){
-        return state.tryDropDown().orElse(state);
+        return state.dropDown().orElse(state);
     }
 
     @Bean
     @Scope("prototype")
     public State moveRightState(State state){
-        return state.tryMoveRight().orElse(state);
+        return state.moveRight().orElse(state);
     }
 
     @Bean
     @Scope("prototype")
     public State moveLeftState(State state){
-        return state.tryMoveLeft().orElse(state);
+        return state.moveLeft().orElse(state);
     }
 
     @Bean
     @Scope("prototype")
     public State rotateState(State state){
-        return state.tryRotate().orElse(state);
+        return state.rotate().orElse(state);
     }
 
     @Bean
     @Scope("prototype")
     public Optional<State> moveDownState(State state){
-        return state.tryMoveDown(State.stepDownArray[0]);
+        return state.moveDown(State.stepDownArray[0]);
     }
 
     @Bean

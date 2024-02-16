@@ -1,10 +1,12 @@
 package com.tetris1.game.tetris.model;
 
+import com.tetris1.game.tetris.model.service.GameLogic;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class Stage {
+public class Stage implements GameLogic<Stage> {
     public static final int WIDTH = 12;
     public static final int HEIGHT = 20;
     private static final StringBuilder pause = new StringBuilder("go!");
@@ -70,13 +72,18 @@ public class Stage {
         return c;
     }
 
-    public Stage addTetraminoToStage() {
+    @Override
+    public Stage addTetramino() {
         return new Stage(drawTetraminoOnCells(), tetramino, tetraminoX, tetraminoY, collapsedLayersCount);
     }
 
-    public Stage setTetraminoToStage(Tetramino tetramino, int x, int y) {
+    @Override
+    public Stage setTetramino(Tetramino tetramino, int x, int y) {
         return new Stage(cells, tetramino, x, y, collapsedLayersCount);
     }
+
+
+
 
     public boolean checkCollision(int dx, int dy, boolean rotate) {
         final char[][] m = rotate ? rotateMatrix(tetramino.getShape()) : tetramino.getShape();
@@ -91,19 +98,34 @@ public class Stage {
 
     }
 
-    public Stage moveTetraminoDown(int yToMoveDown) {
+    @Override
+    public Stage moveDown(int step) {
         if (pause.toString().equals("go!"))
-            return new Stage(cells, tetramino, tetraminoX, tetraminoY + yToMoveDown, collapsedLayersCount);
+            return new Stage(cells, tetramino, tetraminoX, tetraminoY + step, collapsedLayersCount);
         else return new Stage(cells, tetramino, tetraminoX, tetraminoY, collapsedLayersCount);
     }
 
-    public Stage moveTetraminoLeft() {
+    @Override
+    public Stage moveLeft() {
         return new Stage(cells, tetramino, tetraminoX - 1, tetraminoY, collapsedLayersCount);
     }
 
-    public Stage moveTetraminoRight() {
+
+
+    @Override
+    public Stage moveRight() {
         return new Stage(cells, tetramino, tetraminoX + 1, tetraminoY, collapsedLayersCount);
     }
+
+
+
+
+    @Override
+    public Stage rotate() {
+        return new Stage(cells, new Tetramino(rotateMatrix(tetramino.getShape())), tetraminoX, tetraminoY, collapsedLayersCount);
+    }
+
+
 
     private static char[][] rotateMatrix(char[][] m) {
         final int h = m.length;
@@ -113,11 +135,8 @@ public class Stage {
         return t;
     }
 
-    public Stage rotateCcw() {
-        return new Stage(cells, new Tetramino(rotateMatrix(tetramino.getShape())), tetraminoX, tetraminoY, collapsedLayersCount);
-    }
-
-    public Stage collapseFullLayers() {
+    @Override
+    public Stage collapseFilledLayers() {
         final char[][] c = Arrays.stream(cells).map(char[]::clone).toArray(char[][]::new); // copy
         final int[] ny2 = {0, HEIGHT - 1};
 
@@ -130,6 +149,8 @@ public class Stage {
         });
         return new Stage(c, tetramino, tetraminoX, tetraminoY, collapsedLayersCount + ny2[0]);
     }
+
+
 
     private boolean isFull(char[] row) {
         return IntStream.range(0, row.length).noneMatch(i -> row[i] == '0');
@@ -148,4 +169,6 @@ public class Stage {
     public char[][] getCells() {
         return cells;
     }
+
+
 }
