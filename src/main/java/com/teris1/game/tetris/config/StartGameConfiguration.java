@@ -26,9 +26,7 @@ public class StartGameConfiguration {
     }
 
     @Bean
-    public State initiateState(Player player){
+    public State initiateState(Player player) {
         return State.initialState(player).start().newTetramino().orElse(State.initialState(player));
     }
-
-
 }

@@ -1,9 +1,13 @@
 package com.teris1.game.tetris.controller;
 
+import com.teris1.game.tetris.config.PlayGameConfiguration;
 import com.teris1.game.tetris.config.RestartGameConfiguration;
-import com.teris1.game.tetris.config.StartGameConfiguration;
 import com.teris1.game.tetris.config.SaveGameConfiguration;
-import com.tetris1.game.tetris.model.*;
+import com.teris1.game.tetris.config.StartGameConfiguration;
+import com.tetris1.game.tetris.model.Dao;
+import com.tetris1.game.tetris.model.Player;
+import com.tetris1.game.tetris.model.SavedGame;
+import com.tetris1.game.tetris.model.State;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -13,86 +17,49 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.Optional;
 
 @Controller
 public class GameController {
-
-    static HttpSession currentSession;
-    static Player player;
-    static State state;
-
-
-
-
-
-    @RequestMapping(value = "/")
-    public ModelAndView test(HttpServletResponse response) throws IOException {
-        return new ModelAndView("home");
-    }
-
-    @RequestMapping(value = "/login")
-    public ModelAndView loginView() {
-        System.out.println("zzzzzzzzzzzzz!!!!!!");
-
-        return new ModelAndView("login");
-    }
-
-    @RequestMapping(value = "/signup")
-    public ModelAndView signUpView() {
-        return new ModelAndView("signup");
-    }
-
-    @RequestMapping(value = "/gameScreen")
-    public ModelAndView gameView() {
-        return new ModelAndView("gameScreen");
-    }
+    HttpSession currentSession;
+    Player player;
+    State state;
 
     @RequestMapping(value = "/start")
     public ModelAndView gameStart() {
-
-        System.out.println("start");
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        currentSession =attr.getRequest().getSession(true);
-
-        ApplicationContext context =
-                new AnnotationConfigApplicationContext(StartGameConfiguration.class);
-
-
+        currentSession = attr.getRequest().getSession(true);
+        ApplicationContext context = new AnnotationConfigApplicationContext(StartGameConfiguration.class);
         player = context.getBean(Player.class);
-
-        System.out.println(player.getPlayerName());
-//            state = State.initialState(player).start().newTetramino().orElse(State.initialState(player));
-
-
         state = context.getBean(State.class);
-            initiateView();
-
-
+        initiateView();
         return new ModelAndView("index");
     }
 
     @RequestMapping("/{moveId}")
     public ModelAndView gamePlay(@PathVariable Integer moveId) {
-
+        ApplicationContext context = new AnnotationConfigApplicationContext(PlayGameConfiguration.class);
         switch (moveId) {
             case 0 -> {
-                if (GameController.state.tryMoveDown(State.stepDownArray[0]).isEmpty()) {
-                    if (GameController.state.newTetramino().isEmpty()) {
+                Optional<State> moveDownState= (Optional<State>) context.getBean("moveDownState",state);
+                if (moveDownState.isEmpty()) {
+                    Optional<State> newTetraminoState= (Optional<State>) context.getBean("newTetraminoState",state);
+                    if (newTetraminoState.isEmpty()) {
                         currentSession.setAttribute("isGameOn", false);
                         currentSession.setAttribute("gameStatus", "Game over");
-                        GameController.state.stop();
-                    } else GameController.state = GameController.state.newTetramino().orElse(GameController.state);
+                        state.stop();
+                    } else state = newTetraminoState.orElse(state);
                 }
-                if (GameController.state.tryMoveDown(State.stepDownArray[0]).isPresent()) GameController.state =
-                        GameController.state.tryMoveDown(State.stepDownArray[0]).orElse(GameController.state);
+                state = moveDownState.orElse(state);
             }
-            case 1 -> GameController.state = GameController.state.tryRotate().orElse(GameController.state);
-            case 2 -> GameController.state = GameController.state.tryMoveLeft().orElse(GameController.state);
-            case 3 -> GameController.state = GameController.state.tryMoveRight().orElse(GameController.state);
-            case 4 -> GameController.state = GameController.state.tryDropDown().orElse(GameController.state);
+            case 1 -> state = (State) context.getBean("rotateState",state);
+            case 2 -> state = (State) context.getBean("moveLeftState",state);
+            case 3 -> state = (State) context.getBean("moveRightState",state);
+            case 4 -> state = (State) context.getBean("dropDownState",state);
         }
         makeView();
         return new ModelAndView("index");
@@ -102,15 +69,8 @@ public class GameController {
     public ModelAndView gameSave() throws IOException {
         state.setPause();
         currentSession.setAttribute("isGameOn", false);
-
-        ApplicationContext context =
-                new AnnotationConfigApplicationContext(SaveGameConfiguration.class);
-
-        SavedGame savedGame = (SavedGame) context.getBean("saveGame",player,state);
-
-    //    SavedGame savedGame =
-    //            new SavedGame(player.getPlayerName(), player.getPlayerScore(),
-    //                    state.stage.getCells());
+        ApplicationContext context = new AnnotationConfigApplicationContext(SaveGameConfiguration.class);
+        SavedGame savedGame = (SavedGame) context.getBean("saveGame", player, state);
         FileOutputStream outputStream = new FileOutputStream("C:\\JavaProjects\\2\\Tetris-New\\save.ser");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(savedGame);
@@ -120,27 +80,24 @@ public class GameController {
     }
 
     @RequestMapping(value = "/restart")
-    public ModelAndView gameRestart() throws IOException {
-
-        ApplicationContext context =
-                new AnnotationConfigApplicationContext(RestartGameConfiguration.class);
-
-        state= context.getBean(State.class);
-        player= state.player;
-        State.stepDownArray[0] = player.getPlayerScore() / 10 + 1;
+    public ModelAndView gameRestart() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(RestartGameConfiguration.class);
+        state = context.getBean(State.class);
         initiateView();
         makeView();
         return new ModelAndView("index");
     }
 
-    private void initiateView(){
+    private void initiateView() {
         currentSession.setAttribute("gameStatus", "Game is ON");
         currentSession.setAttribute("isGameOn", true);
         state.unSetPause();
     }
 
-    private void makeView(){
+    private void makeView() {
         char[][] cells = state.stage.drawTetraminoOnCells();
+        player = state.player;
+        State.stepDownArray[0] = player.getPlayerScore() / 10 + 1;
         currentSession.setAttribute("player", player.getPlayerName());
         currentSession.setAttribute("score", player.getPlayerScore());
         currentSession.setAttribute("bestplayer", Dao.bestPlayer);
@@ -153,6 +110,4 @@ public class GameController {
             }
         }
     }
-
-
 }
