@@ -1,6 +1,11 @@
 package com.teris1.game.tetris.controller;
 
+import com.teris1.game.tetris.config.RestartGameConfiguration;
+import com.teris1.game.tetris.config.StartGameConfiguration;
+import com.teris1.game.tetris.config.SaveGameConfiguration;
 import com.tetris1.game.tetris.model.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +13,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -19,6 +23,8 @@ public class GameController {
     static HttpSession currentSession;
     static Player player;
     static State state;
+
+
 
 
 
@@ -51,10 +57,17 @@ public class GameController {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         currentSession =attr.getRequest().getSession(true);
 
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(StartGameConfiguration.class);
 
-            player = new Player().createPlayer();
+
+        player = context.getBean(Player.class);
+
         System.out.println(player.getPlayerName());
-            state = State.initialState(player).start().newTetramino().orElse(State.initialState(player));
+//            state = State.initialState(player).start().newTetramino().orElse(State.initialState(player));
+
+
+        state = context.getBean(State.class);
             initiateView();
 
 
@@ -89,9 +102,15 @@ public class GameController {
     public ModelAndView gameSave() throws IOException {
         state.setPause();
         currentSession.setAttribute("isGameOn", false);
-        SavedGame savedGame =
-                new SavedGame(player.getPlayerName(), player.getPlayerScore(),
-                        state.stage.getCells());
+
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(SaveGameConfiguration.class);
+
+        SavedGame savedGame = (SavedGame) context.getBean("saveGame",player,state);
+
+    //    SavedGame savedGame =
+    //            new SavedGame(player.getPlayerName(), player.getPlayerScore(),
+    //                    state.stage.getCells());
         FileOutputStream outputStream = new FileOutputStream("C:\\JavaProjects\\2\\Tetris-New\\save.ser");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(savedGame);
@@ -102,20 +121,12 @@ public class GameController {
 
     @RequestMapping(value = "/restart")
     public ModelAndView gameRestart() throws IOException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\JavaProjects\\2\\Tetris-New\\save.ser");
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
-        try {
-            SavedGame savedGame = (SavedGame) objectInputStream.readObject();
-            player = new Player(savedGame.getPlayerName(), savedGame.getPlayerScore());
-            state =
-                    new State(Stage.recreateStage(savedGame.getCells(), player.getPlayerScore() / 10), true, player).
-                            restartWithNewTetramino().
-                            orElse(new State(Stage.recreateStage(savedGame.getCells(), player.getPlayerScore() / 10), true, new Player(savedGame.getPlayerName(), savedGame.getPlayerScore())));
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(RestartGameConfiguration.class);
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        state= context.getBean(State.class);
+        player= state.player;
         State.stepDownArray[0] = player.getPlayerScore() / 10 + 1;
         initiateView();
         makeView();

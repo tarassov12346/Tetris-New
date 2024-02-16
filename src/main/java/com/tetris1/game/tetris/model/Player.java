@@ -1,5 +1,7 @@
 package com.tetris1.game.tetris.model;
 
+import org.springframework.context.annotation.Bean;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +11,7 @@ public class Player {
     private String playerName;
     private int playerScore;
 
-    public Player() {
+    private Player() {
     }
 
     public Player(String playerName, int playerScore) {
@@ -42,15 +44,4 @@ public class Player {
         this.playerScore = playerScore * 10;
     }
 
-    public Player createPlayer() {
-        List<String> list = new ArrayList<>();
-        list.add("Oswaldo");
-        list.add("Tommy");
-        list.add("Dunny");
-        list.add("Bonny");
-        list.add("Ira");
-        list.add("Wolfy");
-        playerName = list.get(new Random().nextInt(list.size()));
-        return new Player(playerName, playerScore);
-    }
 }
