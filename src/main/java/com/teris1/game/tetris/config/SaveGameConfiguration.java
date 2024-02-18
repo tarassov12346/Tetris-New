@@ -2,7 +2,7 @@ package com.teris1.game.tetris.config;
 
 import com.tetris1.game.tetris.model.Player;
 import com.tetris1.game.tetris.model.SavedGame;
-import com.tetris1.game.tetris.model.State;
+import com.tetris1.game.tetris.model.serviceImpl.State;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;

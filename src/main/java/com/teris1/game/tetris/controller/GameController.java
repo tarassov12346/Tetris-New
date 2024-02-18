@@ -7,7 +7,7 @@ import com.teris1.game.tetris.config.StartGameConfiguration;
 import com.tetris1.game.tetris.model.Dao;
 import com.tetris1.game.tetris.model.Player;
 import com.tetris1.game.tetris.model.SavedGame;
-import com.tetris1.game.tetris.model.State;
+import com.tetris1.game.tetris.model.serviceImpl.State;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -91,7 +91,7 @@ public class GameController {
     private void initiateView() {
         currentSession.setAttribute("gameStatus", "Game is ON");
         currentSession.setAttribute("isGameOn", true);
-        state.unSetPause();
+        state.unsetPause();
     }
 
     private void makeView() {

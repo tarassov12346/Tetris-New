@@ -1,7 +1,7 @@
 package com.teris1.game.tetris.config;
 
 import com.tetris1.game.tetris.model.Player;
-import com.tetris1.game.tetris.model.State;
+import com.tetris1.game.tetris.model.serviceImpl.State;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,6 +27,6 @@ public class StartGameConfiguration {
 
     @Bean
     public State initiateState(Player player) {
-        return State.initialState(player).start().newTetramino().orElse(State.initialState(player));
+        return State.createInitialState(player).start().createStateWithNewTetramino().orElse(State.createInitialState(player));
     }
 }

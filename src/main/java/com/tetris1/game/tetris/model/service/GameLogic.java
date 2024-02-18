@@ -10,4 +10,7 @@ public interface GameLogic <T>{
     T collapseFilledLayers();
     T addTetramino();
     T setTetramino(Tetramino tetramino, int x, int y);
+    void setPause();
+    void unsetPause();
+    boolean checkCollision(int dx, int dy, boolean rotate);
 }

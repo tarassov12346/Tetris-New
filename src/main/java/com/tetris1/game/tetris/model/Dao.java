@@ -1,5 +1,7 @@
 package com.tetris1.game.tetris.model;
 
+import com.tetris1.game.tetris.model.serviceImpl.State;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;

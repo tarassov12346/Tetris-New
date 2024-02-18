@@ -1,6 +1,6 @@
 package com.teris1.game.tetris.config;
 
-import com.tetris1.game.tetris.model.State;
+import com.tetris1.game.tetris.model.serviceImpl.State;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -43,7 +43,7 @@ public class PlayGameConfiguration {
     @Bean
     @Scope("prototype")
     public Optional<State> newTetraminoState(State state){
-        return state.newTetramino();
+        return state.createStateWithNewTetramino();
     }
 
 }

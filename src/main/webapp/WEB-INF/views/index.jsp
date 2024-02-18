@@ -1,5 +1,5 @@
-<%@ page import="com.tetris1.game.tetris.model.State" %>
-<%@ page import="com.tetris1.game.tetris.model.Stage" %>
+<%@ page import="com.tetris1.game.tetris.model.serviceImpl.State" %>
+<%@ page import="com.tetris1.game.tetris.model.serviceImpl.Stage" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
