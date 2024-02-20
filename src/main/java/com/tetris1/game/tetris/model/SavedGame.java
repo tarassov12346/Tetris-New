@@ -1,9 +1,14 @@
 package com.tetris1.game.tetris.model;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 
+@Component
+@Scope("prototype")
 public class SavedGame implements Serializable {
 
     @Serial

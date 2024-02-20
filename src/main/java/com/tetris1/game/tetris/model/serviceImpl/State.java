@@ -6,16 +6,20 @@ import com.tetris1.game.tetris.model.Tetramino;
 import com.tetris1.game.tetris.model.service.GameLogic;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 import java.util.Optional;
 
+@Component
+@Scope("prototype")
 public class State implements GameLogic<Optional<State>> {
     public final Stage stage;
     public final boolean isRunning;
     public final Player player;
-   // public Dao dao = new Dao();
     static public final int[] stepDownArray = {1};
+
     ApplicationContext context =new AnnotationConfigApplicationContext("com.tetris1.game.tetris.model");
     Dao dao=  context.getBean(Dao.class);
 

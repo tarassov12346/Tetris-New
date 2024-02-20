@@ -1,24 +1,20 @@
 package com.tetris1.game.tetris.model;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
+@Component
+@Scope("prototype")
 public class Player {
     private String playerName;
     private int playerScore;
-
-    private Player() {
-    }
 
     public Player(String playerName, int playerScore) {
         this.playerName = playerName;
         this.playerScore = playerScore;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
