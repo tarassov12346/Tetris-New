@@ -1,6 +1,7 @@
 package com.tetris1.game.tetris.model;
 
 import com.tetris1.game.tetris.model.serviceImpl.State;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Component
 public class Dao {
     private final String url = "jdbc:postgresql:game";
     private final String user = "postgres";
