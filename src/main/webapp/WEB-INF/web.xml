@@ -24,7 +24,7 @@
 		</init-param>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>com.teris1.game.tetris</param-value>
+			<param-value>com.app.game.tetris</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

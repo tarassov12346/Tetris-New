@@ -1,4 +1,4 @@
-package com.teris1.game.tetris.config;
+package com.app.game.tetris.config;
 
 import com.tetris1.game.tetris.model.Player;
 import com.tetris1.game.tetris.model.serviceImpl.State;

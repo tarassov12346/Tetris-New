@@ -1,10 +1,10 @@
-package com.teris1.game.tetris.controller;
+package com.app.game.tetris.controller;
 
-import com.teris1.game.tetris.config.PlayGameConfiguration;
-import com.teris1.game.tetris.config.RestartGameConfiguration;
-import com.teris1.game.tetris.config.SaveGameConfiguration;
-import com.teris1.game.tetris.config.StartGameConfiguration;
-import com.tetris1.game.tetris.model.Dao;
+import com.app.game.tetris.config.PlayGameConfiguration;
+import com.app.game.tetris.config.SaveGameConfiguration;
+import com.app.game.tetris.config.StartGameConfiguration;
+import com.app.game.tetris.config.RestartGameConfiguration;
+import com.tetris1.game.tetris.model.persistence.Dao;
 import com.tetris1.game.tetris.model.Player;
 import com.tetris1.game.tetris.model.SavedGame;
 import com.tetris1.game.tetris.model.serviceImpl.State;

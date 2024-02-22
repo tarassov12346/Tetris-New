@@ -1,4 +1,4 @@
-package com.tetris1.game.tetris.model;
+package com.tetris1.game.tetris.model.persistence;
 
 import org.springframework.stereotype.Component;
 

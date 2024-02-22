@@ -1,6 +1,6 @@
 package com.tetris1.game.tetris.model.serviceImpl;
 
-import com.tetris1.game.tetris.model.Dao;
+import com.tetris1.game.tetris.model.persistence.Dao;
 import com.tetris1.game.tetris.model.Player;
 import com.tetris1.game.tetris.model.Tetramino;
 import com.tetris1.game.tetris.model.service.GameLogic;

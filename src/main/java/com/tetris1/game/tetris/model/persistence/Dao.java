@@ -1,5 +1,6 @@
-package com.tetris1.game.tetris.model;
+package com.tetris1.game.tetris.model.persistence;
 
+import com.tetris1.game.tetris.model.Player;
 import com.tetris1.game.tetris.model.serviceImpl.State;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
