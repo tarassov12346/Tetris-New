@@ -1,6 +1,7 @@
 package com.tetris1.game.tetris.model;
 
 import com.tetris1.game.tetris.model.serviceImpl.State;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -13,18 +14,16 @@ import java.util.logging.Logger;
 
 @Component
 public class Dao {
-    private final String url = "jdbc:postgresql:game";
-    private final String user = "postgres";
-    private final String password = "mine";
-
     List<Player> playerList=new ArrayList<>();
     static public String bestPlayer = "To be shown";
     static public int bestScore;
 
+    @Autowired
+    DataConnection dataCon;
+
     public void recordScore(Player player) {
-        String recordScoreQuery = "INSERT INTO player1(name, score) VALUES(?, ?)";
-        try (Connection con = DriverManager.getConnection(url, user, password);
-             PreparedStatement pst = con.prepareStatement(recordScoreQuery)) {
+        String recordScoreQuery = "INSERT INTO player2(name, score) VALUES(?, ?)";
+        try (PreparedStatement pst = dataCon.getConnection().prepareStatement(recordScoreQuery)) {
             pst.setString(1, player.getPlayerName());
             pst.setInt(2, player.getPlayerScore());
             pst.executeUpdate();
@@ -36,9 +35,8 @@ public class Dao {
     }
 
     public void retrieveScores() {
-        String retrieveScoresQuery = "SELECT * FROM player1";
-        try (Connection con = DriverManager.getConnection(url, user, password);
-             PreparedStatement pst = con.prepareStatement(retrieveScoresQuery);
+        String retrieveScoresQuery = "SELECT * FROM player2";
+        try (PreparedStatement pst = dataCon.getConnection().prepareStatement(retrieveScoresQuery);
              ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
                 playerList.add(new Player(rs.getString(1),rs.getInt(2)));
