@@ -1,7 +1,7 @@
 package com.app.game.tetris.config;
 
-import com.tetris1.game.tetris.model.Player;
-import com.tetris1.game.tetris.model.serviceImpl.State;
+import com.app.game.tetris.model.Player;
+import com.app.game.tetris.serviceImpl.State;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -24,12 +24,12 @@ public class StartGameConfiguration {
         list.add("Ira");
         list.add("Wolfy");
         String playerName = list.get(new Random().nextInt(list.size()));
-        ApplicationContext context =new AnnotationConfigApplicationContext("com.tetris1.game.tetris.model");
+        ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.model");
         return context.getBean(Player.class,playerName,0);
     }
 
     @Bean
-    public State initiateState(Player player) {
-        return State.createInitialState(player).start().createStateWithNewTetramino().orElse(State.createInitialState(player));
+    public State initiateState() {
+        return State.createInitialState(createPlayer()).start().createStateWithNewTetramino().orElse(State.createInitialState(createPlayer()));
     }
 }

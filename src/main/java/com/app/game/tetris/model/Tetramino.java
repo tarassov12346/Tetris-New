@@ -1,4 +1,4 @@
-package com.tetris1.game.tetris.model;
+package com.app.game.tetris.model;
 
 import java.util.Arrays;
 import java.util.HashMap;

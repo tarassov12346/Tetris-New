@@ -1,6 +1,6 @@
 package com.app.game.tetris.config;
 
-import com.tetris1.game.tetris.model.serviceImpl.State;
+import com.app.game.tetris.serviceImpl.State;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;

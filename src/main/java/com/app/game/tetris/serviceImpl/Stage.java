@@ -1,7 +1,7 @@
-package com.tetris1.game.tetris.model.serviceImpl;
+package com.app.game.tetris.serviceImpl;
 
-import com.tetris1.game.tetris.model.Tetramino;
-import com.tetris1.game.tetris.model.service.GameLogic;
+import com.app.game.tetris.model.Tetramino;
+import com.app.game.tetris.service.GameLogic;
 
 import java.util.Arrays;
 import java.util.Objects;

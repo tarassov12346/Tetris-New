@@ -1,6 +1,6 @@
-package com.tetris1.game.tetris.model.service;
+package com.app.game.tetris.service;
 
-import com.tetris1.game.tetris.model.Tetramino;
+import com.app.game.tetris.model.Tetramino;
 
 public interface GameLogic <T>{
     T moveDown(int step);

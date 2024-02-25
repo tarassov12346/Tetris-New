@@ -1,9 +1,9 @@
-package com.tetris1.game.tetris.model.serviceImpl;
+package com.app.game.tetris.serviceImpl;
 
-import com.tetris1.game.tetris.model.persistence.Dao;
-import com.tetris1.game.tetris.model.Player;
-import com.tetris1.game.tetris.model.Tetramino;
-import com.tetris1.game.tetris.model.service.GameLogic;
+import com.app.game.tetris.model.Tetramino;
+import com.app.game.tetris.persistence.Dao;
+import com.app.game.tetris.service.GameLogic;
+import com.app.game.tetris.model.Player;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -20,7 +20,7 @@ public class State implements GameLogic<Optional<State>> {
     public final Player player;
     static public final int[] stepDownArray = {1};
 
-    ApplicationContext context =new AnnotationConfigApplicationContext("com.tetris1.game.tetris.model");
+    ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.persistence");
     Dao dao=  context.getBean(Dao.class);
 
     public State(Stage stage, boolean isRunning, Player player) {

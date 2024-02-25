@@ -1,4 +1,4 @@
-package com.tetris1.game.tetris.model;
+package com.app.game.tetris.model;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
