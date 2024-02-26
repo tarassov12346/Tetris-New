@@ -29,7 +29,12 @@ public class RestartGameConfiguration {
         Player player = contextPlayer.getBean(Player.class, savedGame.getPlayerName(), savedGame.getPlayerScore());
         ApplicationContext contextStage =
                 new AnnotationConfigApplicationContext("com.app.game.tetris.serviceImpl");
-        Stage recreatedStage = contextStage.getBean(Stage.class, savedGame.getCells(), Tetramino.getTetramino('0'), 0, 0, player.getPlayerScore() / 10);
+        Stage recreatedStage = contextStage.getBean(Stage.class, savedGame.getCells(), getTetramino0(), 0, 0, player.getPlayerScore() / 10);
         return contextState.getBean(State.class, recreatedStage, true, player).restartWithNewTetramino().orElse(contextState.getBean(State.class, recreatedStage, true, player));
+    }
+
+    private Tetramino getTetramino0(){
+        ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.model");
+        return context.getBean(Tetramino.class, (Object) new char[][]{{'0'}});
     }
 }

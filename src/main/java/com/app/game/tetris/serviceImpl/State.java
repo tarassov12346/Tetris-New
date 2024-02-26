@@ -9,8 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 @Scope("prototype")
@@ -109,7 +108,7 @@ public class State implements GameLogic<Optional<State>> {
     }
 
     public Optional<State> createStateWithNewTetramino() {
-        final Tetramino t = Tetramino.getRandomTetramino();
+        final Tetramino t = getRandomTetramino();
         final State newState = addTetramino().orElse(this)
                 .collapseFilledLayers().orElse(this)
                 .updatePlayerScore()
@@ -118,7 +117,7 @@ public class State implements GameLogic<Optional<State>> {
     }
 
     public Optional<State> restartWithNewTetramino() {
-        final Tetramino t = Tetramino.getRandomTetramino();
+        final Tetramino t = getRandomTetramino();
         final State newState = addTetramino().orElse(this)
                 .setTetramino(t, (Stage.WIDTH - t.getShape().length) / 2, 0).orElse(this);
         return !newState.checkCollision(0, 0, false) ? Optional.of(newState) : Optional.empty();
@@ -152,5 +151,21 @@ public class State implements GameLogic<Optional<State>> {
 
     private State rotateTetramino() {
         return new State(stage.rotate(), isRunning, player);
+    }
+
+    private Tetramino getRandomTetramino(){
+        final Map<Character, Tetramino> tetraminoMap = new HashMap<>();
+        tetraminoMap.put('0', new Tetramino(new char[][]{{'0'}}));
+        tetraminoMap.put('I', new Tetramino(new char[][]{{'0', 'I', '0', '0'}, {'0', 'I', '0', '0'}, {'0', 'I', '0', '0'}, {'0', 'I', '0', '0'}}));
+        tetraminoMap.put('J', new Tetramino(new char[][]{{'0', 'J', '0'}, {'0', 'J', '0'}, {'J', 'J', '0'}}));
+        tetraminoMap.put('L', new Tetramino(new char[][]{{'0', 'L', '0'}, {'0', 'L', '0'}, {'0', 'L', 'L'}}));
+        tetraminoMap.put('O', new Tetramino(new char[][]{{'O', 'O'}, {'O', 'O'}}));
+        tetraminoMap.put('S', new Tetramino(new char[][]{{'0', 'S', 'S'}, {'S', 'S', '0'}, {'0', '0', '0'}}));
+        tetraminoMap.put('T', new Tetramino(new char[][]{{'0', '0', '0'}, {'T', 'T', 'T'}, {'0', 'T', '0'}}));
+        tetraminoMap.put('Z', new Tetramino(new char[][]{{'Z', 'Z', '0'}, {'0', 'Z', 'Z'}, {'0', '0', '0'}}));
+        tetraminoMap.put('K', new Tetramino(new char[][]{{'K', 'K', 'K'}, {'0', 'K', '0'}, {'0', 'K', '0'}}));
+
+        final char[] tetraminos = "IJLOSTZK".toCharArray();
+        return tetraminoMap.get(tetraminos[new Random().nextInt(tetraminos.length)]);
     }
 }

@@ -34,7 +34,7 @@ public class StartGameConfiguration {
     @Bean
     public State initiateState() {
         ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.serviceImpl");
-        Stage emptyStage=context.getBean(Stage.class,makeEmptyMatrix(), Tetramino.getTetramino('0'), 0, 0, 0);
+        Stage emptyStage=context.getBean(Stage.class,makeEmptyMatrix(), getTetramino0(), 0, 0, 0);
         State initialState=context.getBean(State.class, emptyStage, false, createPlayer());
         return initialState.start().createStateWithNewTetramino().orElse(initialState);
     }
@@ -43,5 +43,10 @@ public class StartGameConfiguration {
         final char[][] c = new char[Stage.HEIGHT][Stage.WIDTH];
         IntStream.range(0, Stage.HEIGHT).forEach(y -> IntStream.range(0, Stage.WIDTH).forEach(x -> c[y][x] = '0'));
         return c;
+    }
+
+    private Tetramino getTetramino0(){
+        ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.model");
+        return context.getBean(Tetramino.class, (Object) new char[][]{{'0'}});
     }
 }
