@@ -42,9 +42,7 @@ public class State implements GameLogic<Optional<State>> {
         return Objects.hash(stage, isRunning, player);
     }
 
-    public static State createInitialState(Player player) {
-        return new State(Stage.createEmptyStage(), false, player);
-    }
+
 
     public State start() {
         return new State(stage, true, player);

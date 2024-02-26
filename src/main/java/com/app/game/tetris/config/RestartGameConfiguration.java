@@ -2,6 +2,7 @@ package com.app.game.tetris.config;
 
 import com.app.game.tetris.model.Player;
 import com.app.game.tetris.model.SavedGame;
+import com.app.game.tetris.model.Tetramino;
 import com.app.game.tetris.serviceImpl.Stage;
 import com.app.game.tetris.serviceImpl.State;
 import org.springframework.context.ApplicationContext;
@@ -25,9 +26,10 @@ public class RestartGameConfiguration {
                 new AnnotationConfigApplicationContext("com.app.game.tetris.model");
         ApplicationContext contextState =
                 new AnnotationConfigApplicationContext("com.app.game.tetris.serviceImpl");
-        Player player =contextPlayer.getBean(Player.class,savedGame.getPlayerName(), savedGame.getPlayerScore());
-        return contextState.getBean(State.class,Stage.recreateStage(savedGame.getCells(), player.getPlayerScore() / 10), true, player).
-        restartWithNewTetramino().
-                orElse(contextState.getBean(State.class,Stage.recreateStage(savedGame.getCells(), player.getPlayerScore() / 10), true, player));
+        Player player = contextPlayer.getBean(Player.class, savedGame.getPlayerName(), savedGame.getPlayerScore());
+        ApplicationContext contextStage =
+                new AnnotationConfigApplicationContext("com.app.game.tetris.serviceImpl");
+        Stage recreatedStage = contextStage.getBean(Stage.class, savedGame.getCells(), Tetramino.getTetramino('0'), 0, 0, player.getPlayerScore() / 10);
+        return contextState.getBean(State.class, recreatedStage, true, player).restartWithNewTetramino().orElse(contextState.getBean(State.class, recreatedStage, true, player));
     }
 }

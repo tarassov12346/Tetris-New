@@ -2,11 +2,15 @@ package com.app.game.tetris.serviceImpl;
 
 import com.app.game.tetris.model.Tetramino;
 import com.app.game.tetris.service.GameLogic;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
+@Component
+@Scope("prototype")
 public class Stage implements GameLogic<Stage> {
     public static final int WIDTH = 12;
     public static final int HEIGHT = 20;
@@ -122,16 +126,6 @@ public class Stage implements GameLogic<Stage> {
                         || ((tetraminoX + x + dx) >= WIDTH)
                         || (cells[tetraminoY + y + dy][tetraminoX + x + dx] != '0'))
         )));
-    }
-
-    public static Stage createEmptyStage() {
-        final char[][] c = new char[HEIGHT][WIDTH];
-        IntStream.range(0, HEIGHT).forEach(y -> IntStream.range(0, WIDTH).forEach(x -> c[y][x] = '0'));
-        return new Stage(c, Tetramino.getTetramino('0'), 0, 0, 0);
-    }
-
-    public static Stage recreateStage(char[][] c, int collapsedLayersCount) {
-        return new Stage(c, Tetramino.getTetramino('0'), 0, 0, collapsedLayersCount);
     }
 
     public char[][] drawTetraminoOnCells() {

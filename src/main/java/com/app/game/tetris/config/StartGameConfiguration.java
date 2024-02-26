@@ -1,6 +1,8 @@
 package com.app.game.tetris.config;
 
 import com.app.game.tetris.model.Player;
+import com.app.game.tetris.model.Tetramino;
+import com.app.game.tetris.serviceImpl.Stage;
 import com.app.game.tetris.serviceImpl.State;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 @Configuration
 public class StartGameConfiguration {
@@ -30,6 +33,15 @@ public class StartGameConfiguration {
 
     @Bean
     public State initiateState() {
-        return State.createInitialState(createPlayer()).start().createStateWithNewTetramino().orElse(State.createInitialState(createPlayer()));
+        ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.serviceImpl");
+        Stage emptyStage=context.getBean(Stage.class,makeEmptyMatrix(), Tetramino.getTetramino('0'), 0, 0, 0);
+        State initialState=context.getBean(State.class, emptyStage, false, createPlayer());
+        return initialState.start().createStateWithNewTetramino().orElse(initialState);
+    }
+
+    private char[][] makeEmptyMatrix(){
+        final char[][] c = new char[Stage.HEIGHT][Stage.WIDTH];
+        IntStream.range(0, Stage.HEIGHT).forEach(y -> IntStream.range(0, Stage.WIDTH).forEach(x -> c[y][x] = '0'));
+        return c;
     }
 }
