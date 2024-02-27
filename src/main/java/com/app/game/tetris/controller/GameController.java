@@ -97,12 +97,12 @@ public class GameController {
     private void makeView() {
         char[][] cells = state.stage.drawTetraminoOnCells();
         player = state.player;
-        State.stepDownArray[0] = player.getPlayerScore() / 10 + 1;
+        state.stepDownArray = player.getPlayerScore() / 10 + 1;
         currentSession.setAttribute("player", player.getPlayerName());
         currentSession.setAttribute("score", player.getPlayerScore());
         currentSession.setAttribute("bestplayer", state.context.getBean(Dao.class).bestPlayer);
         currentSession.setAttribute("bestscore", state.context.getBean(Dao.class).bestScore);
-        currentSession.setAttribute("stepdown", State.stepDownArray[0]);
+        currentSession.setAttribute("stepdown", state.stepDownArray);
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 12; j++) {
                 currentSession.setAttribute(new StringBuilder("cells").append(i).append("v").append(j).toString(),

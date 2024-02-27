@@ -17,7 +17,7 @@ public class State implements GameLogic<Optional<State>> {
     public final Stage stage;
     public final boolean isRunning;
     public final Player player;
-    static public final int[] stepDownArray = {1};
+    public int stepDownArray = 1;
 
     public ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.persistence");
     Dao dao=  context.getBean(Dao.class);
@@ -133,7 +133,7 @@ public class State implements GameLogic<Optional<State>> {
 
     private State updatePlayerScore() {
         player.setPlayerScore(stage.collapsedLayersCount);
-        stepDownArray[0] = 1 + stage.collapsedLayersCount;
+        stepDownArray= 1 + stage.collapsedLayersCount;
         return new State(stage.collapseFilledLayers(), isRunning, player);
     }
 
