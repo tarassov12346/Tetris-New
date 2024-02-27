@@ -15,15 +15,15 @@ import java.util.logging.Logger;
 
 @Component
 public class Dao {
-    List<Player> playerList=new ArrayList<>();
-    static public String bestPlayer = "To be shown";
-    static public int bestScore;
+
+    public String bestPlayer = "To be shown";
+    public int bestScore;
 
     @Autowired
     DataConnection dataCon;
 
     public void recordScore(Player player) {
-        String recordScoreQuery = "INSERT INTO player2(name, score) VALUES(?, ?)";
+        String recordScoreQuery = "INSERT INTO player3(name, score) VALUES(?, ?)";
         try (PreparedStatement pst = dataCon.getConnection().prepareStatement(recordScoreQuery)) {
             pst.setString(1, player.getPlayerName());
             pst.setInt(2, player.getPlayerScore());
@@ -36,7 +36,8 @@ public class Dao {
     }
 
     public void retrieveScores() {
-        String retrieveScoresQuery = "SELECT * FROM player2";
+        List<Player> playerList=new ArrayList<>();
+        String retrieveScoresQuery = "SELECT * FROM player3";
         try (PreparedStatement pst = dataCon.getConnection().prepareStatement(retrieveScoresQuery);
              ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {

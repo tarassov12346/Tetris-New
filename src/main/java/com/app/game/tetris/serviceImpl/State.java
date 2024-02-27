@@ -19,7 +19,7 @@ public class State implements GameLogic<Optional<State>> {
     public final Player player;
     static public final int[] stepDownArray = {1};
 
-    ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.persistence");
+    public ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.persistence");
     Dao dao=  context.getBean(Dao.class);
 
     public State(Stage stage, boolean isRunning, Player player) {
