@@ -16,6 +16,6 @@ public class SaveGameConfiguration {
     @Scope("prototype")
     public SavedGame saveGame(Player player, State state) {
         ApplicationContext context = new AnnotationConfigApplicationContext("com.app.game.tetris.model");
-        return context.getBean(SavedGame.class,player.getPlayerName(), player.getPlayerScore(), state.stage.getCells());
+        return context.getBean(SavedGame.class,player.getPlayerName(), player.getPlayerScore(), state.getStage().getCells());
     }
 }

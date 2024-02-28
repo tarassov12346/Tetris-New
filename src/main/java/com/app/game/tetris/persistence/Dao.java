@@ -28,7 +28,7 @@ public class Dao {
             pst.setString(1, player.getPlayerName());
             pst.setInt(2, player.getPlayerScore());
             pst.executeUpdate();
-            System.out.println(player.getPlayerName()+player.getPlayerScore());
+            System.out.println(player.getPlayerName() + player.getPlayerScore());
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(State.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
@@ -36,22 +36,20 @@ public class Dao {
     }
 
     public void retrieveScores() {
-        List<Player> playerList=new ArrayList<>();
+        List<Player> playerList = new ArrayList<>();
         String retrieveScoresQuery = "SELECT * FROM player3";
         try (PreparedStatement pst = dataCon.getConnection().prepareStatement(retrieveScoresQuery);
              ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
-                playerList.add(new Player(rs.getString(1),rs.getInt(2)));
-                Collections.sort(playerList,Comparator.comparingInt(Player::getPlayerScore));
-                bestPlayer=playerList.get(playerList.size()-1).getPlayerName();
-                bestScore=playerList.get(playerList.size()-1).getPlayerScore();
+                playerList.add(new Player(rs.getString(1), rs.getInt(2)));
+                Collections.sort(playerList, Comparator.comparingInt(Player::getPlayerScore));
+                bestPlayer = playerList.get(playerList.size() - 1).getPlayerName();
+                bestScore = playerList.get(playerList.size() - 1).getPlayerScore();
             }
-
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(State.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
         System.out.println("Best player " + bestPlayer + " with score " + bestScore);
     }
-
 }

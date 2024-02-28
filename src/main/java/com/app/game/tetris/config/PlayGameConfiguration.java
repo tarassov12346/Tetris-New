@@ -37,7 +37,7 @@ public class PlayGameConfiguration {
     @Bean
     @Scope("prototype")
     public Optional<State> moveDownState(State state){
-        return state.moveDown(state.stepDownArray);
+        return state.moveDown(state.getStepDown());
     }
 
     @Bean

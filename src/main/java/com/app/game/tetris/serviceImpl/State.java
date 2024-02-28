@@ -14,10 +14,10 @@ import java.util.*;
 @Component
 @Scope("prototype")
 public class State implements GameLogic<Optional<State>> {
-    public final Stage stage;
-    public final boolean isRunning;
-    public final Player player;
-    public int stepDownArray = 1;
+    private final Stage stage;
+    private final boolean isRunning;
+    private final Player player;
+    private int stepDown = 1;
 
     public ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.persistence");
     Dao dao=  context.getBean(Dao.class);
@@ -131,9 +131,29 @@ public class State implements GameLogic<Optional<State>> {
         return !checkCollision(0, yToDropDown - 1, false) ? Optional.of(moveTetraminoDown(yToDropDown - 1)) : Optional.empty();
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public int getStepDown() {
+        return stepDown;
+    }
+
+    public void setStepDown(int stepDown) {
+        this.stepDown = stepDown;
+    }
+
     private State updatePlayerScore() {
-        player.setPlayerScore(stage.collapsedLayersCount);
-        stepDownArray= 1 + stage.collapsedLayersCount;
+        player.setPlayerScore(stage.getCollapsedLayersCount());
+        stepDown= 1 + stage.getCollapsedLayersCount();
         return new State(stage.collapseFilledLayers(), isRunning, player);
     }
 

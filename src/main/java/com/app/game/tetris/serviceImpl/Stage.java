@@ -12,13 +12,12 @@ import java.util.stream.IntStream;
 @Component
 @Scope("prototype")
 public class Stage implements GameLogic<Stage> {
-
     private static final StringBuilder pause = new StringBuilder("go!");
     private final char[][] cells;
     private final Tetramino tetramino;
     private final int tetraminoX;
     private final int tetraminoY;
-    public int collapsedLayersCount;
+    private int collapsedLayersCount;
 
     public Stage(char[][] cells, Tetramino tetramino, int tetraminoX, int tetraminoY, int collapsedLayersCount) {
         this.cells = cells;
@@ -41,18 +40,6 @@ public class Stage implements GameLogic<Stage> {
         int result = Objects.hash(tetramino, tetraminoX, tetraminoY, collapsedLayersCount);
         result = 31 * result + Arrays.hashCode(cells);
         return result;
-    }
-
-    public Tetramino getTetramino() {
-        return tetramino;
-    }
-
-    public int getTetraminoX() {
-        return tetraminoX;
-    }
-
-    public int getTetraminoY() {
-        return tetraminoY;
     }
 
     @Override
@@ -142,6 +129,22 @@ public class Stage implements GameLogic<Stage> {
         return cells;
     }
 
+    public Tetramino getTetramino() {
+        return tetramino;
+    }
+
+    public int getTetraminoX() {
+        return tetraminoX;
+    }
+
+    public int getTetraminoY() {
+        return tetraminoY;
+    }
+
+    public int getCollapsedLayersCount() {
+        return collapsedLayersCount;
+    }
+
     private static char[][] rotateMatrix(char[][] m) {
         final int h = m.length;
         final int w = m[0].length;
@@ -153,5 +156,4 @@ public class Stage implements GameLogic<Stage> {
     private boolean isFull(char[] row) {
         return IntStream.range(0, row.length).noneMatch(i -> row[i] == '0');
     }
-
 }
