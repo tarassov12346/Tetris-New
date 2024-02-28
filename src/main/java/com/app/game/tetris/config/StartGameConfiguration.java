@@ -2,6 +2,7 @@ package com.app.game.tetris.config;
 
 import com.app.game.tetris.model.Player;
 import com.app.game.tetris.model.Tetramino;
+import com.app.game.tetris.service.GameLogic;
 import com.app.game.tetris.serviceImpl.Stage;
 import com.app.game.tetris.serviceImpl.State;
 import org.springframework.context.ApplicationContext;
@@ -40,8 +41,8 @@ public class StartGameConfiguration {
     }
 
     private char[][] makeEmptyMatrix(){
-        final char[][] c = new char[Stage.HEIGHT][Stage.WIDTH];
-        IntStream.range(0, Stage.HEIGHT).forEach(y -> IntStream.range(0, Stage.WIDTH).forEach(x -> c[y][x] = '0'));
+        final char[][] c = new char[GameLogic.HEIGHT][GameLogic.WIDTH];
+        IntStream.range(0, GameLogic.HEIGHT).forEach(y -> IntStream.range(0, GameLogic.WIDTH).forEach(x -> c[y][x] = '0'));
         return c;
     }
 

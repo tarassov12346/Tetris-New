@@ -3,6 +3,8 @@ package com.app.game.tetris.service;
 import com.app.game.tetris.model.Tetramino;
 
 public interface GameLogic <T>{
+    int WIDTH = 12;
+    int HEIGHT = 20;
     T moveDown(int step);
     T rotate();
     T moveRight();

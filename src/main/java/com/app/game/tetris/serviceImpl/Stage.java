@@ -12,8 +12,7 @@ import java.util.stream.IntStream;
 @Component
 @Scope("prototype")
 public class Stage implements GameLogic<Stage> {
-    public static final int WIDTH = 12;
-    public static final int HEIGHT = 20;
+
     private static final StringBuilder pause = new StringBuilder("go!");
     private final char[][] cells;
     private final Tetramino tetramino;
