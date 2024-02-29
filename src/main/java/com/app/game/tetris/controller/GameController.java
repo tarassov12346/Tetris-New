@@ -100,8 +100,8 @@ public class GameController {
         state.setStepDown(player.getPlayerScore() / 10 + 1);
         currentSession.setAttribute("player", player.getPlayerName());
         currentSession.setAttribute("score", player.getPlayerScore());
-        currentSession.setAttribute("bestplayer", state.context.getBean(Dao.class).bestPlayer);
-        currentSession.setAttribute("bestscore", state.context.getBean(Dao.class).bestScore);
+        currentSession.setAttribute("bestplayer", state.dao.bestPlayer);
+        currentSession.setAttribute("bestscore", state.dao.bestScore);
         currentSession.setAttribute("stepdown", state.getStepDown());
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 12; j++) {
