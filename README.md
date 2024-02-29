@@ -18,3 +18,13 @@ the player's name is selected randomly, the player's score is calculated as each
 
 ************************************************************************************************************************
 
+The project uses the following technologies:
+
+Spring IOC / Dependency Injection
+Spring Java Config
+Spring Web MVC
+Tomcat server 9.0
+Serialization
+PostgreSQL
+JSP
+************************************************************************************************************************

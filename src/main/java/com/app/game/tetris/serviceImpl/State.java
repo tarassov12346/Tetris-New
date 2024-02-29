@@ -66,7 +66,7 @@ public class State implements GameLogic<Optional<State>> {
     @Override
     public Optional<State> moveDown(int step) {
         int yToStepDown;
-        for (yToStepDown = 0; (yToStepDown <= step) && (yToStepDown < Stage.HEIGHT); yToStepDown++) {
+        for (yToStepDown = 0; (yToStepDown <= step) && (yToStepDown < GameLogic.HEIGHT); yToStepDown++) {
             if (checkCollision(0, yToStepDown, false)) break;
         }
         return !checkCollision(0, 1, false) ? Optional.of(moveTetraminoDown(yToStepDown - 1)) : Optional.empty();
@@ -112,20 +112,20 @@ public class State implements GameLogic<Optional<State>> {
         final State newState = addTetramino().orElse(this)
                 .collapseFilledLayers().orElse(this)
                 .updatePlayerScore()
-                .setTetramino(t, (Stage.WIDTH - t.getShape().length) / 2, 0).orElse(this);
+                .setTetramino(t, (GameLogic.WIDTH - t.getShape().length) / 2, 0).orElse(this);
         return !newState.checkCollision(0, 0, false) ? Optional.of(newState) : Optional.empty();
     }
 
     public Optional<State> restartWithNewTetramino() {
         final Tetramino t = getRandomTetramino();
         final State newState = addTetramino().orElse(this)
-                .setTetramino(t, (Stage.WIDTH - t.getShape().length) / 2, 0).orElse(this);
+                .setTetramino(t, (GameLogic.WIDTH - t.getShape().length) / 2, 0).orElse(this);
         return !newState.checkCollision(0, 0, false) ? Optional.of(newState) : Optional.empty();
     }
 
     public Optional<State> dropDown() {
         int yToDropDown;
-        for (yToDropDown = 0; yToDropDown < Stage.HEIGHT; yToDropDown++) {
+        for (yToDropDown = 0; yToDropDown < GameLogic.HEIGHT; yToDropDown++) {
             if (checkCollision(0, yToDropDown, false)) break;
         }
         return !checkCollision(0, yToDropDown - 1, false) ? Optional.of(moveTetraminoDown(yToDropDown - 1)) : Optional.empty();
