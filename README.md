@@ -32,7 +32,10 @@ Java Tetris Tests
 
 There are 16 tests which provide for the game units' functionality:
 
- - run the following maven command to start unit tests: mvn -Dlog4j.configuration=file:C:\JavaProjects\Tetris-new\src\test\resources\log4j.properties -DsuiteXml=testng-unit-tests.xml clean test
+ - run the following maven command to start unit tests: 
+ 
+mvn -Dlog4j.configuration=file:C:\JavaProjects\Tetris-new\src\test\resources\log4j.properties -DsuiteXml=testng-unit-tests.xml clean test
+ 
  - each test method is logged for debugging pls find the unit tests log in \target\logs\quality-automation.log
 
 ************************************************************************************************************************
