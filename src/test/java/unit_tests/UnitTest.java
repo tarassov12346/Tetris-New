@@ -4,11 +4,9 @@ import com.app.game.tetris.model.Player;
 import com.app.game.tetris.model.Tetramino;
 import com.app.game.tetris.serviceImpl.Stage;
 import com.app.game.tetris.serviceImpl.State;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.log4testng.Logger;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +19,7 @@ import static com.app.game.tetris.service.GameLogic.WIDTH;
 @Test()
 public class UnitTest {
 
-    private static final Logger log = Logger.getLogger(UnitTest.class);
+    private static final Logger log = Logger.getLogger(UnitTest.class.getName());
     int moveCount;
 
     @DataProvider
@@ -279,8 +277,7 @@ public class UnitTest {
     }
 
     private Tetramino getTetramino0(){
-        ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.model");
-        return context.getBean(Tetramino.class, (Object) new char[][]{{'0'}});
+        return new Tetramino(new char[][]{{'0'}});
     }
 
     private Character getShapeTypeByTetramino(Tetramino tetramino) {
