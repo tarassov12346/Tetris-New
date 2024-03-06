@@ -61,6 +61,7 @@ public class APITest {
         String bodyTxt = response.getBody().asString();
         Document document = Jsoup.parse(bodyTxt);
         Element contentElement = document.getElementById("header");
+        log.info(contentElement.text());
         Assert.assertTrue(contentElement.text().contains("Game is ON"));
     }
 
@@ -86,7 +87,10 @@ public class APITest {
         Document document = Jsoup.parse(bodyTxt);
         Element contentElement = document.getElementById("content");
         for (String s : list) {
-            if (contentElement.text().contains(s)) isPLayerNamePresent = true;
+            if (contentElement.text().contains(s)) {
+                log.info(contentElement.text());
+                isPLayerNamePresent = true;
+            }
         }
         Assert.assertTrue(isPLayerNamePresent);
     }
@@ -112,12 +116,16 @@ public class APITest {
             Elements cols = row.select("td");// разбиваем полученную строку по тегу  на столбы
             for (int j = 0; j < 12; j++) {
                 for (int k = 0; k < 8; k++) {
-                    if (cols.get(j).toString().contains(images[k])) isTetraminoImagePresent = true;
+                    if (cols.get(j).toString().contains(images[k])) {
+                        log.info(cols.get(j));
+                        isTetraminoImagePresent = true;
+                    }
                 }
             }
         }
         Assert.assertTrue(isTetraminoImagePresent);
     }
+
     @AfterMethod
     public void doAfterEachTestMethod() {
         log.info("Test Method  is finished");
