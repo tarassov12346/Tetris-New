@@ -37,6 +37,7 @@ public class GameController {
         player = context.getBean(Player.class);
         state = context.getBean(State.class);
         initiateView();
+        makeView();
         return new ModelAndView("index");
     }
 
