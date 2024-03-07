@@ -15,6 +15,8 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
+import javafx.util.Pair;
+
 public class APITest {
     private static final Logger log = Logger.getLogger(APITest.class);
 
@@ -124,6 +126,66 @@ public class APITest {
             }
         }
         Assert.assertTrue(isTetraminoImagePresent);
+    }
+
+    @Test(description = "checks if the tetramino image should move 1 step down after 0 request is sent")
+    public void shouldTetraminoImageMoveDown() {
+        log.info("shouldTetraminoImageMoveDown Test start");
+        //  String id=RestAssured.get("http://localhost:9090/start").sessionId();
+        List<Pair<Integer, Integer>> tetraminoCoordinatesToMakeComparison = new ArrayList<>();
+        String[] images = {"I.png", "J.png", "K.png", "L.png", "O.png", "S.png", "T.png", "Z.png"};
+        Response responseToStart =
+                given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("start")
+                        .then()
+                        .extract()
+                        .response();
+        String bodyResponseToStartTxt = responseToStart.getBody().asString();
+        //    System.out.println(bodyTxt1);
+        Document documentResponseToStart = Jsoup.parse(bodyResponseToStartTxt);
+        Element tableElementRTS = documentResponseToStart.select("table").get(1);
+        Elements rowsRTS = tableElementRTS.select("tr");// разбиваем нашу таблицу на строки по тегу
+        //по номеру индекса получает строку
+        for (int i = 0; i < rowsRTS.size(); i++) {
+            Elements cols = rowsRTS.get(i).select("td");// разбиваем полученную строку по тегу  на столбы
+            for (int j = 0; j < 12; j++) {
+                for (int k = 0; k < 8; k++) {
+                    if (cols.get(j).toString().contains(images[k])) {
+                        log.info(i + " " + j);
+                        tetraminoCoordinatesToMakeComparison.add(new Pair<>(i + 1, j));
+                    }
+                }
+            }
+        }
+        String id = responseToStart.sessionId();
+        List<Pair<Integer, Integer>> tetraminoAfterDownCoordinates = new ArrayList<>();
+        Response responseToDown =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
+                        .when()
+                        .get("0")
+                        .then()
+                        .extract()
+                        .response();
+        String bodyResponseToDownTxt = responseToDown.getBody().asString();
+        //   System.out.println(bodyTxt);
+        Document documentResponseToDown = Jsoup.parse(bodyResponseToDownTxt);
+        Element tableElementRTD = documentResponseToDown.select("table").get(1);
+        Elements rowsRTD = tableElementRTD.select("tr");// разбиваем нашу таблицу на строки по тегу
+        //по номеру индекса получает строку
+        for (int i = 0; i < rowsRTD.size(); i++) {
+            Elements cols = rowsRTD.get(i).select("td");// разбиваем полученную строку по тегу  на столбы
+            for (int j = 0; j < 12; j++) {
+                for (int k = 0; k < 8; k++) {
+                    if (cols.get(j).toString().contains(images[k])) {
+                        log.info(i + " " + j);
+                        tetraminoAfterDownCoordinates.add(new Pair<>(i, j));
+                    }
+                }
+            }
+        }
+        Assert.assertTrue(tetraminoCoordinatesToMakeComparison.equals(tetraminoAfterDownCoordinates));
     }
 
     @AfterMethod

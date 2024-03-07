@@ -126,10 +126,15 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.13.1</version>
 		</dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>21-ea+5</version>
+            <scope>test</scope>
+        </dependency>
 
 
-
-	</dependencies>
+    </dependencies>
 
 	<repositories>
 		<repository>

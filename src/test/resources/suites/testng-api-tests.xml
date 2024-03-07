@@ -9,6 +9,7 @@
                     <include name="shouldGameIsONAppear"/>
                     <include name="shouldPlayerNameAppear"/>
                     <include name="shouldTetraminoImageAppear"/>
+                    <include name="shouldTetraminoImageMoveDown"/>
                 </methods>
             </class>
         </classes>

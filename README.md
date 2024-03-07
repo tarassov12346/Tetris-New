@@ -39,7 +39,8 @@ mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\l
  - each test method is logged for debugging pls find the unit tests log in \target\logs\quality-automation.log
 
 ************************************************************************************************************************
-Pls find 8 api tests which make sure that each defined client request receives successful response from the server:
+Pls find 8 api tests which make sure that each defined client request receives successful response from the server and
+4 more api tests checking response bodies to client requests
 
  - run tomcat9TetrisServerLaunch
  - run the following maven command to start api tests: 
