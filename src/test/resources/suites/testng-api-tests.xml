@@ -10,6 +10,8 @@
                     <include name="shouldPlayerNameAppear"/>
                     <include name="shouldTetraminoImageAppear"/>
                     <include name="shouldTetraminoImageMoveDown"/>
+                    <include name="shouldTetraminoImageMoveLeft"/>
+                    <include name="shouldTetraminoImageMoveRight"/>
                 </methods>
             </class>
         </classes>

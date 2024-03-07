@@ -40,7 +40,7 @@ mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\l
 
 ************************************************************************************************************************
 Pls find 8 api tests which make sure that each defined client request receives successful response from the server and
-4 more api tests checking response bodies to client requests
+6 more api tests checking if response bodies are in accordance with client requests
 
  - run tomcat9TetrisServerLaunch
  - run the following maven command to start api tests: 
@@ -48,3 +48,11 @@ Pls find 8 api tests which make sure that each defined client request receives s
 mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -DsuiteXml=testng-api-tests.xml clean test
 
  - the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
+
+************************************************************************************************************************
+Run All tests
+
+- run tomcat9TetrisServerLaunch
+- run the following maven command to run all tests: 
+
+mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -DsuiteXml=testng-all-tests.xml clean test
