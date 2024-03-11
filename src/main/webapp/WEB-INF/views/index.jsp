@@ -17,11 +17,11 @@
 </head>
 <body>
 
-<h1 text align="center"> <b> TETRIS  at speed ${stepdown} </b> </h1>
+<h1 text align="center"> <b id="tetrisSpeedBox"> TETRIS  at speed ${stepdown} </b> </h1>
 
 <div id="header"
   <h1> </h1>
-  <h2>  Game status: ${gameStatus} </h2>
+  <h2 id="gameStatusBox">  Game status: ${gameStatus} </h2>
 </div>
 
 
@@ -34,15 +34,15 @@
        <table align="center" style="background-color: #ffffff; border:1px black solid;" border="1" width="600">
          <tr>
          <td> <b> Player </b> </td>
-         <td> ${player}</td>
+         <td id="playerBox"> ${player}</td>
          <td> <b> Score </b> </td>
-         <td> ${score}</td>
+         <td id="playerScoreBox"> ${score}</td>
          </tr>
          <tr>
          <td> <b> Best Player </b></td>
-         <td>  ${bestplayer}</td>
+         <td id="bestPlayerBox">  ${bestplayer}</td>
          <td> <b> Best Score </b> </td>
-         <td>  ${bestscore}</td>
+         <td id="bestPlayerScoreBox">  ${bestscore}</td>
          </tr>
          </table>
 
@@ -332,13 +332,13 @@
 </div>
 
 <div id="controls">
-   <button onclick="left()" >Left</button>
-   <button onclick="rotate()" >Rotate</button>
-   <button onclick="drop()" >Drop</button>
-   <button onclick="newgame()" >NewGame</button>
-   <button onclick="save()" >Save</button>
-   <button onclick="restart()" >Restart</button>
-   <button onclick="right()" >Right</button>
+   <button id="leftButton" onclick="left()" >Left</button>
+   <button id="rotateButton" onclick="rotate()" >Rotate</button>
+   <button id="dropButton" onclick="drop()" >Drop</button>
+   <button id="newGameButton" onclick="newgame()" >NewGame</button>
+   <button id="saveButton" onclick="save()" >Save</button>
+   <button id="restartButton" onclick="restart()" >Restart</button>
+   <button id="rightButton" onclick="right()" >Right</button>
 </div>
 
 
