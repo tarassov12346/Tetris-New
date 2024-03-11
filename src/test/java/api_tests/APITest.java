@@ -10,8 +10,7 @@ import org.jsoup.select.Elements;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 
@@ -20,6 +19,7 @@ import javafx.util.Pair;
 public class APITest {
     private static final Logger log = Logger.getLogger(APITest.class);
     String[] images = {"I.png", "J.png", "K.png", "L.png", "O.png", "S.png", "T.png", "Z.png"};
+    String image;
 
     @DataProvider
     public Object[][] dataProviderMethod() {
@@ -150,7 +150,7 @@ public class APITest {
                         .extract()
                         .response();
         String bodyResponseToDownTxt = responseToDown.getBody().asString();
-        Assert.assertEquals(getTetraminoCoordinates(bodyResponseToStartTxt, 1, 0),getTetraminoCoordinates(bodyResponseToDownTxt, 0, 0));
+        Assert.assertEquals(getTetraminoCoordinates(bodyResponseToStartTxt, 1, 0), getTetraminoCoordinates(bodyResponseToDownTxt, 0, 0));
     }
 
     @Test(description = "checks if the tetramino image should move 1 position left after '2' request is sent")
@@ -165,7 +165,7 @@ public class APITest {
                         .response();
         String bodyResponseToStartTxt = responseToStart.getBody().asString();
         String id = responseToStart.sessionId();
-        Response responseToDown =
+        Response responseToMoveLeft =
                 given().sessionId(id)
                         .baseUri("http://localhost:9090/")
                         .when()
@@ -173,8 +173,8 @@ public class APITest {
                         .then()
                         .extract()
                         .response();
-        String bodyResponseToDownTxt = responseToDown.getBody().asString();
-        Assert.assertEquals(getTetraminoCoordinates(bodyResponseToStartTxt, 0, -1),getTetraminoCoordinates(bodyResponseToDownTxt, 0, 0));
+        String bodyResponseToMoveLeftTxt = responseToMoveLeft.getBody().asString();
+        Assert.assertEquals(getTetraminoCoordinates(bodyResponseToStartTxt, 0, -1), getTetraminoCoordinates(bodyResponseToMoveLeftTxt, 0, 0));
     }
 
     @Test(description = "checks if the tetramino image should move 1 position right after '3' request is sent")
@@ -189,7 +189,7 @@ public class APITest {
                         .response();
         String bodyResponseToStartTxt = responseToStart.getBody().asString();
         String id = responseToStart.sessionId();
-        Response responseToDown =
+        Response responseToMoveRight =
                 given().sessionId(id)
                         .baseUri("http://localhost:9090/")
                         .when()
@@ -197,8 +197,53 @@ public class APITest {
                         .then()
                         .extract()
                         .response();
-        String bodyResponseToDownTxt = responseToDown.getBody().asString();
-        Assert.assertEquals(getTetraminoCoordinates(bodyResponseToStartTxt, 0, 1),getTetraminoCoordinates(bodyResponseToDownTxt, 0, 0));
+        String bodyResponseToMoveRightTxt = responseToMoveRight.getBody().asString();
+        Assert.assertEquals(getTetraminoCoordinates(bodyResponseToStartTxt, 0, 1), getTetraminoCoordinates(bodyResponseToMoveRightTxt, 0, 0));
+    }
+
+    @Test(description = "checks if the tetramino image should rotate after '1' request is sent")
+    public void shouldTetraminoImageRotate() {
+        log.info("shouldTetraminoImageRotate Test start");
+        Response responseToStart =
+                given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("start")
+                        .then()
+                        .extract()
+                        .response();
+        String id = responseToStart.sessionId();
+        Response responseToRotate =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
+                        .when()
+                        .get("1")
+                        .then()
+                        .extract()
+                        .response();
+        String bodyResponseToRotateTxt = responseToRotate.getBody().asString();
+        List<Pair<Integer, Integer>> tetraminoCoordinates = getTetraminoCoordinates(bodyResponseToRotateTxt, 0, 0);
+        Assert.assertEquals(getCoordinatesCheckSample(image), tetraminoCoordinates);
+    }
+
+    private List<Pair<Integer, Integer>> getCoordinatesCheckSample(String key) {
+        Map<String, List<Pair<Integer, Integer>>> map = new HashMap<>();
+        List<Pair<Integer, Integer>> listZ = Arrays.asList(new Pair<>(0, 5), new Pair<>(1, 4), new Pair<>(1, 5), new Pair<>(2, 4));
+        map.put("Z.png", listZ);
+        List<Pair<Integer, Integer>> listK = Arrays.asList(new Pair<>(0, 4), new Pair<>(1, 4), new Pair<>(1, 5), new Pair<>(1, 6), new Pair<>(2, 4));
+        map.put("K.png", listK);
+        List<Pair<Integer, Integer>> listI = Arrays.asList(new Pair<>(2, 4), new Pair<>(2, 5), new Pair<>(2, 6), new Pair<>(2, 7));
+        map.put("I.png", listI);
+        List<Pair<Integer, Integer>> listJ = Arrays.asList(new Pair<>(1, 4), new Pair<>(1, 5), new Pair<>(1, 6), new Pair<>(2, 6));
+        map.put("J.png", listJ);
+        List<Pair<Integer, Integer>> listS = Arrays.asList(new Pair<>(0, 4), new Pair<>(1, 4), new Pair<>(1, 5), new Pair<>(2, 5));
+        map.put("S.png", listS);
+        List<Pair<Integer, Integer>> listT = Arrays.asList(new Pair<>(0, 5), new Pair<>(1, 5), new Pair<>(1, 6), new Pair<>(2, 5));
+        map.put("T.png", listT);
+        List<Pair<Integer, Integer>> listL = Arrays.asList(new Pair<>(0, 6), new Pair<>(1, 4), new Pair<>(1, 5), new Pair<>(1, 6));
+        map.put("L.png", listL);
+        List<Pair<Integer, Integer>> listO = Arrays.asList(new Pair<>(0, 5), new Pair<>(0, 6), new Pair<>(1, 5), new Pair<>(1, 6));
+        map.put("O.png", listO);
+        return map.get(key);
     }
 
     private List<Pair<Integer, Integer>> getTetraminoCoordinates(String bodyResponseTxt, int deltaI, int deltaJ) {
@@ -212,7 +257,8 @@ public class APITest {
             for (int j = 0; j < 12; j++) {
                 for (int k = 0; k < 8; k++) {
                     if (cols.get(j).toString().contains(images[k])) {
-                        log.info(i + " " + j);
+                        image = images[k];
+                        log.info(i + " " + image + " " + j);
                         tetraminoCoordinates.add(new Pair<>(i + deltaI, j + deltaJ));
                     }
                 }

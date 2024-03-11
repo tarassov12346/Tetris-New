@@ -40,7 +40,7 @@ mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\l
 
 ************************************************************************************************************************
 Pls find 8 api tests which make sure that each defined client request receives successful response from the server and
-6 more api tests checking if response bodies are in accordance with client requests
+7 more api tests checking if response bodies are in accordance with client requests
 
  - run tomcat9TetrisServerLaunch
  - run the following maven command to start api tests: 
