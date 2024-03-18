@@ -7,6 +7,7 @@
         <classes>
             <class name="unit_tests.UnitTest"/>
             <class name="api_tests.APITest"/>
+            <class name="ui_tests.test.GameSaveTest"/>
         </classes>
     </test>
 </suite>

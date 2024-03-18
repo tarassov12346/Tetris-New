@@ -46,7 +46,7 @@
          </tr>
          </table>
 
-      <table align="center" style="background-color: #ffffff; border:1px black solid;">
+      <table id= "table" align="center" style="background-color: #ffffff; border:1px black solid;">
       	<tr>
       	<td><img src=${cells0v0}></td>
         <td><img src=${cells0v1}></td>
