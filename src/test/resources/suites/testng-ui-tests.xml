@@ -6,6 +6,8 @@
             <class name="ui_tests.test.GameSaveTest">
                 <methods>
                     <include name="doesSavedGameRestart"/>
+                    <include name="doesSavedGameRestartWithSavedPLayerName"/>
+                    <include name="doesSavedGameRestartWithSavedPLayerScore"/>
                 </methods>
             </class>
         </classes>

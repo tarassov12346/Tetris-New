@@ -17,6 +17,11 @@ public class GameService {
     private final Logger log = Logger.getLogger(UnitTest.class.getName());
     private final WebDriver driver = DriverSingleton.getDriver();
     private TetrisPage tetrisPage;
+    public String savedPLayerName;
+    public String savedPlayerScore;
+    public String restartedPLayerName;
+    public String restartedPlayerScore;
+
 
     public GameService(WebDriver driver) {
         tetrisPage = new TetrisPage(driver);
@@ -27,6 +32,12 @@ public class GameService {
         List<Pair<Integer, Integer>> filledCellsListSaved = getFilledCells();
         log.info("filledCellsList saved:");
         log.info(Arrays.toString(filledCellsListSaved.toArray()));
+        savedPLayerName=tetrisPage.getPlayer();
+        log.info("Player Name saved:");
+        log.info(savedPLayerName);
+        savedPlayerScore=tetrisPage.getPlayerScore();
+        log.info("Player Score saved:");
+        log.info(savedPlayerScore);
         return filledCellsListSaved;
     }
 
@@ -35,6 +46,12 @@ public class GameService {
         List<Pair<Integer, Integer>> filledCellsListAfterRestart = getFilledCells();
         log.info("filledCellsList after restart:");
         log.info(Arrays.toString(filledCellsListAfterRestart.toArray()));
+        restartedPLayerName=tetrisPage.getPlayer();
+        log.info("Player Name after restart:");
+        log.info(restartedPLayerName);
+        restartedPlayerScore=tetrisPage.getPlayerScore();
+        log.info("Player Score after restart:");
+        log.info(restartedPlayerScore);
         return filledCellsListAfterRestart;
     }
 

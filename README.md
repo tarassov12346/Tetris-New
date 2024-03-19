@@ -50,7 +50,7 @@ mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\l
  - the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
 
 ************************************************************************************************************************
-Pls find UI tests, making sure that the game is saved and then can be restarted at any moment later
+Pls find 3 UI tests, making sure that the game is saved and then can be restarted at any moment later
 - run tomcat9TetrisServerLaunch
 - run the following maven command to start api tests:
 
