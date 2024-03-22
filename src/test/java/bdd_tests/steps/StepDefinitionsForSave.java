@@ -1,4 +1,4 @@
-package bdd_tests.attributes;
+package bdd_tests.steps;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class MyStepdefs {
+public class StepDefinitionsForSave {
     private final Logger log = Logger.getLogger(UnitTest.class.getName());
     private WebDriver driver;
     private TetrisPage tetrisPage;
