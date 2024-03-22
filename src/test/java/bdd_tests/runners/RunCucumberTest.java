@@ -7,5 +7,4 @@ import io.cucumber.testng.CucumberOptions;
         features = "src/test/resources/features/attributes", glue = "bdd_tests/steps",
         tags = "@save")
 public class RunCucumberTest extends AbstractTestNGCucumberTests{
-
 }
