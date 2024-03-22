@@ -35,7 +35,7 @@ public class StepDefinitionsForSave {
         System.setProperty("browser", browser);
         driver = DriverSingleton.getDriver();
         tetrisPage = new TetrisPage(driver);
-        tetrisPage=tetrisPage.openPage();
+        tetrisPage = tetrisPage.openPage();
     }
 
     @And("player waits {int} seconds")
@@ -64,20 +64,20 @@ public class StepDefinitionsForSave {
     @And("player presses Save button")
     public void playerPressesSaveButton() {
         tetrisPage = tetrisPage.clickSaveButton();
-        filledCellsListSaved=getFilledCells();
+        filledCellsListSaved = getFilledCells();
         log.info("filledCellsList saved:");
         log.info(Arrays.toString(filledCellsListSaved.toArray()));
-        savedPLayerName=tetrisPage.getPlayer();
+        savedPLayerName = tetrisPage.getPlayer();
         log.info("Player Name saved:");
         log.info(savedPLayerName);
-        savedPlayerScore=tetrisPage.getPlayerScore();
+        savedPlayerScore = tetrisPage.getPlayerScore();
         log.info("Player Score saved:");
         log.info(savedPlayerScore);
     }
 
     @And("player again opens the game page and player waits {int} seconds")
-    public void playerAgainOpensTheGamePage(int seconds){
-        tetrisPage=tetrisPage.openPage();
+    public void playerAgainOpensTheGamePage(int seconds) {
+        tetrisPage = tetrisPage.openPage();
         makeUserWait(seconds);
     }
 
@@ -98,30 +98,31 @@ public class StepDefinitionsForSave {
         tetrisPage = tetrisPage.clickRestartButton().clickRestartButton();
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("clearInterval(myTimer);");
-        filledCellsListAfterRestart=getFilledCells();
+        filledCellsListAfterRestart = getFilledCells();
         log.info("filledCellsList after restart:");
         log.info(Arrays.toString(filledCellsListAfterRestart.toArray()));
-        restartedPLayerName=tetrisPage.getPlayer();
+        restartedPLayerName = tetrisPage.getPlayer();
         log.info("Player Name after restart:");
         log.info(restartedPLayerName);
-        restartedPlayerScore=tetrisPage.getPlayerScore();
+        restartedPlayerScore = tetrisPage.getPlayerScore();
         log.info("Player Score after restart:");
         log.info(restartedPlayerScore);
     }
 
     @Then("mosaic of fallen tetraminos changes into that as it was when Save button was pressed during previous game")
     public void mosaicOfFallenTetraminosChangesIntoThatAsItWasWhenSaveButtonWasPressedDuringPreviousGame() {
-        Assert.assertEquals(filledCellsListSaved,filledCellsListAfterRestart);
+        Assert.assertEquals(filledCellsListSaved, filledCellsListAfterRestart);
     }
 
     @And("the restarted game have the same player name as the saved one")
     public void theRestartedGameHaveTheSamePlayerNameAsTheSavedOne() {
-        Assert.assertEquals(savedPLayerName,restartedPLayerName);
+        Assert.assertEquals(savedPLayerName, restartedPLayerName);
     }
 
     @And("the restarted game have the same player score as the saved one")
     public void theRestartedGameHaveTheSamePlayerScoreAsTheSavedOne() {
-        Assert.assertEquals(savedPlayerScore,restartedPlayerScore);
+        Assert.assertEquals(savedPlayerScore, restartedPlayerScore);
+        DriverSingleton.closeDriver();
         log.info("BDD Tests are finished");
     }
 
@@ -152,7 +153,4 @@ public class StepDefinitionsForSave {
         }
         return getFilledCellsToCompare(filledCellsCoordinatesList);
     }
-
-
-
 }

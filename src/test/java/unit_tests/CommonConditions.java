@@ -4,10 +4,7 @@ import com.app.game.tetris.model.Tetramino;
 import com.app.game.tetris.serviceImpl.Stage;
 import com.app.game.tetris.serviceImpl.State;
 import org.apache.log4j.Logger;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +18,7 @@ class CommonConditions {
     protected static final Logger log = Logger.getLogger(UnitTest.class.getName());
     int moveCount;
 
-    @BeforeTest
+    @BeforeClass
     public void doBeforeTests() {
         log.info("UnitTests start");
     }
@@ -187,7 +184,7 @@ class CommonConditions {
         log.info("Test Method  is finished");
     }
 
-    @AfterTest
+    @AfterClass
     public void doAfterTests() {
         log.info("UnitTests are finished");
     }

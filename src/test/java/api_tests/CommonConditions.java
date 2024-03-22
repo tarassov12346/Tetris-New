@@ -6,10 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 
 import java.util.*;
 
@@ -18,7 +15,7 @@ class CommonConditions {
     String[] images = {"I.png", "J.png", "K.png", "L.png", "O.png", "S.png", "T.png", "Z.png"};
     String image;
 
-    @BeforeTest
+    @BeforeClass
     public void doBeforeTests() {
         log.info("APITests start");
     }
@@ -75,7 +72,7 @@ class CommonConditions {
         log.info("Test Method  is finished");
     }
 
-    @AfterTest
+    @AfterClass
     public void doAfterTests() {
         log.info("APITests are finished");
     }
