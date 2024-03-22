@@ -56,6 +56,12 @@ Pls find 3 UI tests, making sure that the game is saved and then can be restarte
 
 mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -Dbrowser=firefox -DsuiteXml=testng-ui-tests.xml clean test
 ************************************************************************************************************************
+Pls find Cucumber test, reflecting user behaviour driven approach to tests development
+- run tomcat9TetrisServerLaunch
+- run the following maven command to start api tests:
+
+mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -Dbrowser=firefox -DsuiteXml=testng-bdd-tests.xml clean test
+************************************************************************************************************************
 Run All tests
 
 - run tomcat9TetrisServerLaunch
