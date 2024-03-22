@@ -31,7 +31,7 @@ public class StepDefinitionsForSave {
 
     @Given("I open the game page thru {string}")
     public void iOpenTheGamePageThru(String browser) {
-        log.info("BDDTests start");
+
         System.setProperty("browser", browser);
         driver = DriverSingleton.getDriver();
         tetrisPage = new TetrisPage(driver);
@@ -122,8 +122,6 @@ public class StepDefinitionsForSave {
     @And("the restarted game have the same player score as the saved one")
     public void theRestartedGameHaveTheSamePlayerScoreAsTheSavedOne() {
         Assert.assertEquals(savedPlayerScore, restartedPlayerScore);
-        DriverSingleton.closeDriver();
-        log.info("BDD Tests are finished");
     }
 
     private void makeUserWait(int second) {
