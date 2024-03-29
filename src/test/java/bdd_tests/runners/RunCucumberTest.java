@@ -12,7 +12,7 @@ import ui_tests.driver.DriverSingleton;
         features = "src/test/resources/features/attributes", glue = "bdd_tests/steps",
         tags = "@save")
 public class RunCucumberTest extends AbstractTestNGCucumberTests{
-    protected static final Logger log = Logger.getLogger(APITest.class);
+    protected static final Logger log = Logger.getLogger(RunCucumberTest.class);
 
     @BeforeClass
     public void doBeforeTests() {

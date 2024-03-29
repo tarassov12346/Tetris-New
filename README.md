@@ -1,4 +1,4 @@
-ava Tetris Game
+Java Tetris Game
 ![](tetris.png)
 
 tomcat9TetrisGameLaunch Config

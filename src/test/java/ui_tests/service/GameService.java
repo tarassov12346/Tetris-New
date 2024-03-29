@@ -6,7 +6,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import ui_tests.driver.DriverSingleton;
 import ui_tests.page.TetrisPage;
-import unit_tests.UnitTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class GameService {
-    private final Logger log = Logger.getLogger(UnitTest.class.getName());
+    private final Logger log = Logger.getLogger(GameService.class.getName());
     private final WebDriver driver = DriverSingleton.getDriver();
     private TetrisPage tetrisPage;
     public String savedPLayerName;

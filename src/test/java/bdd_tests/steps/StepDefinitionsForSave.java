@@ -11,7 +11,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import ui_tests.driver.DriverSingleton;
 import ui_tests.page.TetrisPage;
-import unit_tests.UnitTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class StepDefinitionsForSave {
-    private final Logger log = Logger.getLogger(UnitTest.class.getName());
+    private final Logger log = Logger.getLogger(StepDefinitionsForSave.class.getName());
     private WebDriver driver;
     private TetrisPage tetrisPage;
     private List<Pair<Integer, Integer>> filledCellsListSaved;

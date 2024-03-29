@@ -1,17 +1,19 @@
 package ui_tests.test;
 
-import api_tests.APITest;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import ui_tests.driver.DriverSingleton;
 import ui_tests.service.GameService;
 
 import java.util.List;
 
 public class CommonConditions {
-    protected static final Logger log = Logger.getLogger(APITest.class);
+    protected static final Logger log = Logger.getLogger(GameSaveTest.class);
     public WebDriver driver;
     List<Pair<Integer, Integer>> savedGameCells;
     List<Pair<Integer, Integer>> restartedGameCells;
