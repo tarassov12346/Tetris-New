@@ -1,5 +1,12 @@
-Java Tetris Game
+ava Tetris Game
 ![](tetris.png)
+
+tomcat9TetrisGameLaunch Config
+![](tomcat9TetrisGameLaunch.png)
+
+tomcat9TetrisServerLaunch Config
+![](tomcat9TetrisServerLaunch.png)
+
 ************************************************************************************************************************
  run 'tomcat9TetrisGameLaunch' to play the game
 
@@ -33,7 +40,11 @@ Java Tetris Tests
 There are 16 tests which provide for the game units' functionality:
 
  - run the following maven command to start unit tests: 
- 
+
+mvn -Dlog4j.configuration=file:path to log4j.properties file -DsuiteXml=testng-unit-tests.xml clean test 
+
+in my case it will be:
+
 mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -DsuiteXml=testng-unit-tests.xml clean test
  
  - each test method is logged for debugging pls find the unit tests log in \target\logs\quality-automation.log
@@ -43,7 +54,12 @@ Pls find 8 api tests which make sure that each defined client request receives s
 7 more api tests checking if response bodies are in accordance with client requests
 
  - run tomcat9TetrisServerLaunch
+ 
  - run the following maven command to start api tests: 
+
+mvn -Dlog4j.configuration=file:path to log4j.properties file -DsuiteXml=testng-api-tests.xml clean test
+
+in my case it will be:
 
 mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -DsuiteXml=testng-api-tests.xml clean test
 
@@ -54,18 +70,39 @@ Pls find 3 UI tests, making sure that the game is saved and then can be restarte
 - run tomcat9TetrisServerLaunch
 - run the following maven command to start api tests:
 
+mvn -Dlog4j.configuration=file:path to log4j.properties file -Dbrowser=firefox -DsuiteXml=testng-ui-tests.xml clean test
+
+in my case it will be:
+
 mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -Dbrowser=firefox -DsuiteXml=testng-ui-tests.xml clean test
+
+- the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
+
 ************************************************************************************************************************
 Pls find Cucumber test, reflecting user behaviour driven approach to tests development
 - run tomcat9TetrisServerLaunch
 - run the following maven command to start api tests:
 
+mvn -Dlog4j.configuration=file:path to log4j.properties file -Dbrowser=firefox -DsuiteXml=testng-bdd-tests.xml clean test
+
+in my case it will be:
+
 mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -Dbrowser=firefox -DsuiteXml=testng-bdd-tests.xml clean test
+
+- the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
+
 ************************************************************************************************************************
 Run All tests
 
 - run tomcat9TetrisServerLaunch
 - run the following maven command to run all tests: 
 
+mvn -Dlog4j.configuration=file:path to log4j.properties file -Dbrowser=firefox -DsuiteXml=testng-all-tests.xml clean test
+
+in my case it will be:
+
 mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -Dbrowser=firefox -DsuiteXml=testng-all-tests.xml clean test
+
+- the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
+
 ************************************************************************************************************************
