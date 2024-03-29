@@ -35,6 +35,18 @@ The project uses the following technologies:
 - PostgreSQL
 - JSP
 ************************************************************************************************************************
+There is a custom test framework for Test Automation created for the project.
+The two most popular hybrid frameworks are used:
+TestNG and BDD Cucumber
+The following technologies are used here:
+- Selenium
+- Singleton+Factory
+- Page Object
+- Page Factory
+- REST Assured
+- Data Provider
+- Gherkin
+************************************************************************************************************************
 Java Tetris Tests
 
 There are 16 tests which provide for the game units' functionality:
