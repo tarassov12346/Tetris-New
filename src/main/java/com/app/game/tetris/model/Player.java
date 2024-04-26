@@ -1,43 +1,20 @@
 package com.app.game.tetris.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
-
 @Component
 @Scope("prototype")
+@Data
+@AllArgsConstructor
 public class Player {
     private String playerName;
     private int playerScore;
 
-    public Player(String playerName, int playerScore) {
-        this.playerName = playerName;
-        this.playerScore = playerScore;
-    }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return playerScore == player.playerScore && playerName.equals(player.playerName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(playerName, playerScore);
-    }
-
-    public String getPlayerName() {
-        return this.playerName;
-    }
-
-    public int getPlayerScore() {
-        return this.playerScore;
-    }
-
-    public void setPlayerScore(int playerScore) {
-        this.playerScore = playerScore * 10;
+    public void setPlayerScore(int collapsedLayersCount) {
+        this.playerScore = collapsedLayersCount * 10;
     }
 
 }
