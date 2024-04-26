@@ -1,10 +1,9 @@
 package com.app.game.tetris.controller;
 
 import com.app.game.tetris.config.PlayGameConfiguration;
+import com.app.game.tetris.config.RestartGameConfiguration;
 import com.app.game.tetris.config.SaveGameConfiguration;
 import com.app.game.tetris.config.StartGameConfiguration;
-import com.app.game.tetris.config.RestartGameConfiguration;
-import com.app.game.tetris.persistence.Dao;
 import com.app.game.tetris.model.Player;
 import com.app.game.tetris.model.SavedGame;
 import com.app.game.tetris.serviceImpl.State;
@@ -25,9 +24,9 @@ import java.util.Optional;
 
 @Controller
 public class GameController {
-    HttpSession currentSession;
-    Player player;
-    State state;
+    private HttpSession currentSession;
+    private Player player;
+    private State state;
 
     @RequestMapping(value = "/start")
     public ModelAndView gameStart() {
