@@ -34,6 +34,7 @@ The project uses the following technologies:
 - Serialization
 - PostgreSQL
 - JSP
+- Lombok
 ************************************************************************************************************************
 There is a custom test framework for Test Automation created for the project.
 The two most popular hybrid frameworks are used:
