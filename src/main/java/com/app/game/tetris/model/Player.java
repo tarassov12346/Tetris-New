@@ -16,5 +16,4 @@ public class Player {
     public void setPlayerScore(int collapsedLayersCount) {
         this.playerScore = collapsedLayersCount * 10;
     }
-
 }
