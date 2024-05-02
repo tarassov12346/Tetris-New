@@ -71,7 +71,7 @@ public class GameController {
         currentSession.setAttribute("isGameOn", false);
         ApplicationContext context = new AnnotationConfigApplicationContext(SaveGameConfiguration.class);
         SavedGame savedGame = (SavedGame) context.getBean("saveGame", player, state);
-        FileOutputStream outputStream = new FileOutputStream("C:\\JavaProjects\\2\\Tetris-New\\save.ser");
+        FileOutputStream outputStream = new FileOutputStream(System.getProperty("user.dir")+"\\save.ser");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(savedGame);
         objectOutputStream.close();

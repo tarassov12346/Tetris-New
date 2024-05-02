@@ -19,7 +19,7 @@ public class RestartGameConfiguration {
 
     @Bean
     public State recreateState() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream("C:\\JavaProjects\\2\\Tetris-New\\save.ser");
+        FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir")+"\\save.ser");
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         SavedGame savedGame = (SavedGame) objectInputStream.readObject();
         ApplicationContext contextPlayer = new AnnotationConfigApplicationContext("com.app.game.tetris.model");
