@@ -53,12 +53,8 @@ Java Tetris Tests
 There are 16 tests which provide for the game units' functionality:
 
  - run the following maven command to start unit tests: 
-
-mvn -Dlog4j.configuration=file:path to log4j.properties file -DsuiteXml=testng-unit-tests.xml clean test 
-
-in my case it will be:
-
-mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -DsuiteXml=testng-unit-tests.xml clean test
+ 
+mvn -DsuiteXml=testng-unit-tests.xml clean test
  
  - each test method is logged for debugging pls find the unit tests log in \target\logs\quality-automation.log
 
@@ -70,11 +66,7 @@ Pls find 8 api tests which make sure that each defined client request receives s
  
  - run the following maven command to start api tests: 
 
-mvn -Dlog4j.configuration=file:path to log4j.properties file -DsuiteXml=testng-api-tests.xml clean test
-
-in my case it will be:
-
-mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -DsuiteXml=testng-api-tests.xml clean test
+mvn -DsuiteXml=testng-api-tests.xml clean test
 
  - the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
 
@@ -83,11 +75,7 @@ Pls find 3 UI tests, making sure that the game is saved and then can be restarte
 - run tomcat9TetrisServerLaunch
 - run the following maven command to start api tests:
 
-mvn -Dlog4j.configuration=file:path to log4j.properties file -Dbrowser=firefox -DsuiteXml=testng-ui-tests.xml clean test
-
-in my case it will be:
-
-mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -Dbrowser=firefox -DsuiteXml=testng-ui-tests.xml clean test
+mvn -Dbrowser=firefox -DsuiteXml=testng-ui-tests.xml clean test
 
 - the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
 
@@ -96,11 +84,7 @@ Pls find Cucumber test, reflecting user behaviour driven approach to tests devel
 - run tomcat9TetrisServerLaunch
 - run the following maven command to start api tests:
 
-mvn -Dlog4j.configuration=file:path to log4j.properties file -Dbrowser=firefox -DsuiteXml=testng-bdd-tests.xml clean test
-
-in my case it will be:
-
-mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -Dbrowser=firefox -DsuiteXml=testng-bdd-tests.xml clean test
+mvn -Dbrowser=firefox -DsuiteXml=testng-bdd-tests.xml clean test
 
 - the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
 
@@ -110,11 +94,7 @@ Run All tests
 - run tomcat9TetrisServerLaunch
 - run the following maven command to run all tests: 
 
-mvn -Dlog4j.configuration=file:path to log4j.properties file -Dbrowser=firefox -DsuiteXml=testng-all-tests.xml clean test
-
-in my case it will be:
-
-mvn -Dlog4j.configuration=file:C:\JavaProjects\2\Tetris-New\src\test\resources\log4j.properties -Dbrowser=firefox -DsuiteXml=testng-all-tests.xml clean test
+mvn -Dbrowser=firefox -DsuiteXml=testng-all-tests.xml clean test
 
 - the test method is logged for debugging pls find the api tests log in \target\logs\quality-automation.log
 
