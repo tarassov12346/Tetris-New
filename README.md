@@ -7,6 +7,9 @@ tomcat9TetrisGameLaunch Config
 tomcat9TetrisServerLaunch Config
 ![](tomcat9TetrisServerLaunch.png)
 
+PostgreSQLDatabase Config
+![](PostgreSQLDatabaseConfig.png)
+
 ************************************************************************************************************************
  run 'tomcat9TetrisGameLaunch' to play the game
 
@@ -33,6 +36,7 @@ The project uses the following technologies:
 - Tomcat server 9.0
 - Serialization
 - PostgreSQL
+- Hibernate
 - JSP
 - Lombok
 ************************************************************************************************************************
