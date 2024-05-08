@@ -125,8 +125,6 @@
             <version>21-ea+5</version>
             <scope>test</scope>
         </dependency>
-
-
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
@@ -153,24 +151,27 @@
             <artifactId>gherkin</artifactId>
             <version>26.1.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
-
-
-
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.4.10.Final</version>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -180,8 +181,6 @@
             <url>https://oss.sonatype.org/content/repositories/springsource-milestones</url>
         </repository>
     </repositories>
-
-
 
     <profiles>
         <profile>
@@ -202,10 +201,6 @@
             </properties>
         </profile>
     </profiles>
-
-
-
-
 
     <build>
         <finalName>tetris</finalName>
