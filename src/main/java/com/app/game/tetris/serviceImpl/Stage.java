@@ -145,6 +145,8 @@ public class Stage implements GameLogic<Stage> {
         return collapsedLayersCount;
     }
 
+    public StringBuilder getPause(){return pause;}
+
     private char[][] rotateMatrix(char[][] m) {
         final int h = m.length;
         final int w = m[0].length;

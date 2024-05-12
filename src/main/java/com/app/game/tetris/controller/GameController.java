@@ -45,9 +45,9 @@ public class GameController {
         ApplicationContext context = new AnnotationConfigApplicationContext(PlayGameConfiguration.class);
         switch (moveId) {
             case 0 -> {
-                Optional<State> moveDownState= (Optional<State>) context.getBean("moveDownState",state);
+                Optional<State> moveDownState = (Optional<State>) context.getBean("moveDownState", state);
                 if (moveDownState.isEmpty()) {
-                    Optional<State> newTetraminoState= (Optional<State>) context.getBean("newTetraminoState",state);
+                    Optional<State> newTetraminoState = (Optional<State>) context.getBean("newTetraminoState", state);
                     if (newTetraminoState.isEmpty()) {
                         currentSession.setAttribute("isGameOn", false);
                         currentSession.setAttribute("gameStatus", "Game over");
@@ -56,10 +56,11 @@ public class GameController {
                 }
                 state = moveDownState.orElse(state);
             }
-            case 1 -> state = (State) context.getBean("rotateState",state);
-            case 2 -> state = (State) context.getBean("moveLeftState",state);
-            case 3 -> state = (State) context.getBean("moveRightState",state);
-            case 4 -> state = (State) context.getBean("dropDownState",state);
+            case 1 -> state = (State) context.getBean("rotateState", state);
+            case 2 -> state = (State) context.getBean("moveLeftState", state);
+            case 3 -> state = (State) context.getBean("moveRightState", state);
+            case 4 -> state = (State) context.getBean("dropDownState", state);
+            case 5 -> state.recordScore();
         }
         makeView();
         return new ModelAndView("index");
@@ -71,7 +72,7 @@ public class GameController {
         currentSession.setAttribute("isGameOn", false);
         ApplicationContext context = new AnnotationConfigApplicationContext(SaveGameConfiguration.class);
         SavedGame savedGame = (SavedGame) context.getBean("saveGame", player, state);
-        FileOutputStream outputStream = new FileOutputStream(System.getProperty("user.dir")+"\\save.ser");
+        FileOutputStream outputStream = new FileOutputStream(System.getProperty("user.dir") + "\\save.ser");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(savedGame);
         objectOutputStream.close();

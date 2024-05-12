@@ -388,15 +388,33 @@ function newgame() {
 
  function restart() {
    window.location='/restart';
-  }
+ }
+
+ function record() {
+   window.location='/5';
+ }
+
+
 
 
 function falldown() {
-         window.location='/0';
-    }
+   if(${isGameOn}) window.location='/0';
+  }
+
+
+
 
   var myTimer =setInterval(falldown, 500);
-  if(!${isGameOn}) clearInterval(myTimer);
+  if(!${isGameOn})  clearInterval(myTimer);
+
+  var timerId =setTimeout(record, 3000);
+
+
+
+
+
+
+
 
 
 

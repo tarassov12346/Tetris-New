@@ -19,8 +19,8 @@ public class State implements GameLogic<Optional<State>> {
     private final Player player;
     private int stepDown = 1;
 
-    ApplicationContext context =new AnnotationConfigApplicationContext("com.app.game.tetris.persistence");
-    public Dao dao=  context.getBean(Dao.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext("com.app.game.tetris.persistence");
+    public Dao dao = context.getBean(Dao.class);
 
     public State(Stage stage, boolean isRunning, Player player) {
         this.stage = Objects.requireNonNull(stage);
@@ -42,15 +42,19 @@ public class State implements GameLogic<Optional<State>> {
     }
 
 
-
     public State start() {
         return new State(stage, true, player);
     }
 
     public void stop() {
-        dao.recordScore(player);
-        dao.retrieveScores();
         new State(stage, false, player);
+    }
+
+    public void recordScore() {
+        if (stage.getPause().toString().equals("go!")) {
+            dao.recordScore(player);
+            dao.retrieveScores();
+        }
     }
 
     @Override
@@ -153,7 +157,7 @@ public class State implements GameLogic<Optional<State>> {
 
     private State updatePlayerScore() {
         player.setPlayerScore(stage.getCollapsedLayersCount());
-        stepDown= 1 + stage.getCollapsedLayersCount();
+        stepDown = 1 + stage.getCollapsedLayersCount();
         return new State(stage.collapseFilledLayers(), isRunning, player);
     }
 
@@ -173,7 +177,7 @@ public class State implements GameLogic<Optional<State>> {
         return new State(stage.rotate(), isRunning, player);
     }
 
-    private Tetramino getRandomTetramino(){
+    private Tetramino getRandomTetramino() {
         final Map<Character, Tetramino> tetraminoMap = new HashMap<>();
         tetraminoMap.put('0', new Tetramino(new char[][]{{'0'}}));
         tetraminoMap.put('I', new Tetramino(new char[][]{{'0', 'I', '0', '0'}, {'0', 'I', '0', '0'}, {'0', 'I', '0', '0'}, {'0', 'I', '0', '0'}}));
