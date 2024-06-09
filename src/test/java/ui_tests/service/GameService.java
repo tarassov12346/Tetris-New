@@ -31,10 +31,10 @@ public class GameService {
         List<Pair<Integer, Integer>> filledCellsListSaved = getFilledCells();
         log.info("filledCellsList saved:");
         log.info(Arrays.toString(filledCellsListSaved.toArray()));
-        savedPLayerName=tetrisPage.getPlayer();
+        savedPLayerName = tetrisPage.getPlayer();
         log.info("Player Name saved:");
         log.info(savedPLayerName);
-        savedPlayerScore=tetrisPage.getPlayerScore();
+        savedPlayerScore = tetrisPage.getPlayerScore();
         log.info("Player Score saved:");
         log.info(savedPlayerScore);
         return filledCellsListSaved;
@@ -45,10 +45,10 @@ public class GameService {
         List<Pair<Integer, Integer>> filledCellsListAfterRestart = getFilledCells();
         log.info("filledCellsList after restart:");
         log.info(Arrays.toString(filledCellsListAfterRestart.toArray()));
-        restartedPLayerName=tetrisPage.getPlayer();
+        restartedPLayerName = tetrisPage.getPlayer();
         log.info("Player Name after restart:");
         log.info(restartedPLayerName);
-        restartedPlayerScore=tetrisPage.getPlayerScore();
+        restartedPlayerScore = tetrisPage.getPlayerScore();
         log.info("Player Score after restart:");
         log.info(restartedPlayerScore);
         return filledCellsListAfterRestart;
@@ -56,8 +56,8 @@ public class GameService {
 
     private List<Pair<Integer, Integer>> getFilledCells() {
         List<Pair<Integer, Integer>> filledCellsCoordinatesList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 12; j++) {
+        for (int i = 1; i < 20; i++) {
+            for (int j = 1; j < 12; j++) {
                 if (!tetrisPage.getCellValue(i, j).equals("0.png")) {
                     filledCellsCoordinatesList.add(new Pair(i, j));
                 }
@@ -76,6 +76,7 @@ public class GameService {
 
     private void runScenarioBeforeGameSaving() {
         tetrisPage = tetrisPage.openPage();
+        tetrisPage = tetrisPage.startGameButton();
         makeUserWait(3);
         tetrisPage = tetrisPage.clickLeftButton().clickLeftButton().clickLeftButton().clickDropButton();
         makeUserWait(3);
@@ -87,7 +88,10 @@ public class GameService {
     }
 
     private void runScenarioAfterGameSaving() {
-        tetrisPage = tetrisPage.openPage();
+        //  tetrisPage = tetrisPage.openPage();
+        tetrisPage = tetrisPage.clickNewGameButton();
+        makeUserWait(3);
+        tetrisPage = tetrisPage.clickStartGameButton();
         makeUserWait(3);
         tetrisPage = tetrisPage.clickRightButton().clickRightButton().clickDropButton();
         makeUserWait(3);

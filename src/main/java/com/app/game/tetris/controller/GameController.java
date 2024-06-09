@@ -28,15 +28,22 @@ public class GameController {
     private Player player;
     private State state;
 
-    @RequestMapping(value = "/start")
-    public ModelAndView gameStart() {
+
+    @RequestMapping(value = "/hello")
+    public ModelAndView hello(){
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         currentSession = attr.getRequest().getSession(true);
         ApplicationContext context = new AnnotationConfigApplicationContext(StartGameConfiguration.class);
         player = context.getBean(Player.class);
         state = context.getBean(State.class);
+        makeHelloView();
+        return new ModelAndView("hello");
+    }
+
+    @RequestMapping(value = "/start")
+    public ModelAndView gameStart() {
         initiateView();
-        makeView();
+        makeGamePageView();
         return new ModelAndView("index");
     }
 
@@ -62,7 +69,7 @@ public class GameController {
             case 4 -> state = (State) context.getBean("dropDownState", state);
             case 5 -> state.recordScore();
         }
-        makeView();
+        makeGamePageView();
         return new ModelAndView("index");
     }
 
@@ -85,7 +92,7 @@ public class GameController {
         ApplicationContext context = new AnnotationConfigApplicationContext(RestartGameConfiguration.class);
         state = context.getBean(State.class);
         initiateView();
-        makeView();
+        makeGamePageView();
         return new ModelAndView("index");
     }
 
@@ -95,7 +102,7 @@ public class GameController {
         state.unsetPause();
     }
 
-    private void makeView() {
+    private void makeGamePageView() {
         char[][] cells = state.getStage().drawTetraminoOnCells();
         player = state.getPlayer();
         state.setStepDown(player.getPlayerScore() / 10 + 1);
@@ -110,5 +117,10 @@ public class GameController {
                         new StringBuilder("/img/").append(cells[i][j]).append(".png").toString());
             }
         }
+    }
+
+    private void makeHelloView(){
+        player = state.getPlayer();
+        currentSession.setAttribute("player", player.getPlayerName());
     }
 }

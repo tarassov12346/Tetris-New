@@ -7,7 +7,7 @@
 <head>
     <title>Tetris</title>
 
-    <link href="resources/style.css" rel="stylesheet">
+    <link href="resources/styleGamePage.css" rel="stylesheet">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
@@ -379,7 +379,7 @@ window.location='/4';
 }
 
 function newgame() {
- window.location='/start';
+ window.location='/hello';
  }
 
  function save() {

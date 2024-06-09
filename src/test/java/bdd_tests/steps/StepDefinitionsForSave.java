@@ -30,11 +30,11 @@ public class StepDefinitionsForSave {
 
     @Given("I open the game page thru {string}")
     public void iOpenTheGamePageThru(String browser) {
-
         System.setProperty("browser", browser);
         driver = DriverSingleton.getDriver();
         tetrisPage = new TetrisPage(driver);
-        tetrisPage = tetrisPage.openPage();
+        tetrisPage = tetrisPage.openPage().openPage();
+        tetrisPage = tetrisPage.clickStartGameButton();
     }
 
     @And("player waits {int} seconds")
@@ -77,6 +77,7 @@ public class StepDefinitionsForSave {
     @And("player again opens the game page and player waits {int} seconds")
     public void playerAgainOpensTheGamePage(int seconds) {
         tetrisPage = tetrisPage.openPage();
+        tetrisPage = tetrisPage.startGameButton();
         makeUserWait(seconds);
     }
 
@@ -141,8 +142,8 @@ public class StepDefinitionsForSave {
 
     private List<Pair<Integer, Integer>> getFilledCells() {
         List<Pair<Integer, Integer>> filledCellsCoordinatesList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 12; j++) {
+        for (int i = 1; i < 20; i++) {
+            for (int j = 1; j < 12; j++) {
                 if (!tetrisPage.getCellValue(i, j).equals("0.png")) {
                     filledCellsCoordinatesList.add(new Pair(i, j));
                 }

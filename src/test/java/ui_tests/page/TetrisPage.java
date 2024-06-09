@@ -6,8 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TetrisPage extends AbstractPage{
-    private final String TETRIS_PAGE = "http://localhost:9090/start";
+public class TetrisPage extends AbstractPage {
+    //  private final String TETRIS_PAGE = "http://localhost:9090/start";
+
+    private final String HELLO_PAGE = "http://localhost:9090/hello";
 
     @FindBy(id = "newGameButton")
     private WebElement newGameButton;
@@ -27,23 +29,26 @@ public class TetrisPage extends AbstractPage{
     @FindBy(id = "restartButton")
     private WebElement restartButton;
 
-    @FindBy(id="gameStatusBox")
+    @FindBy(id = "gameStatusBox")
     private WebElement gameStatusBox;
 
-    @FindBy(id="playerBox")
+    @FindBy(id = "playerBox")
     private WebElement playerBox;
 
-    @FindBy(id="playerScoreBox")
+    @FindBy(id = "playerScoreBox")
     private WebElement playerScoreBox;
 
-    @FindBy(id="bestPlayerBox")
+    @FindBy(id = "bestPlayerBox")
     private WebElement bestPlayerBox;
 
-    @FindBy(id="bestPlayerScoreBox")
+    @FindBy(id = "bestPlayerScoreBox")
     private WebElement bestPlayerScoreBox;
 
-    @FindBy(id="table")
+    @FindBy(id = "table")
     private WebElement table;
+
+    @FindBy(id = "startGameButton")
+    private WebElement startGameButton;
 
     public TetrisPage(WebDriver driver) {
         super(driver);
@@ -51,12 +56,22 @@ public class TetrisPage extends AbstractPage{
 
     @Override
     public TetrisPage openPage() {
-        driver.navigate().to(TETRIS_PAGE);
+        driver.navigate().to(HELLO_PAGE);
+        return this;
+    }
+
+    public TetrisPage startGameButton() {
+        startGameButton.click();
         return this;
     }
 
     public TetrisPage clickNewGameButton() {
         newGameButton.click();
+        return this;
+    }
+
+    public TetrisPage clickStartGameButton() {
+        startGameButton.click();
         return this;
     }
 
@@ -106,6 +121,6 @@ public class TetrisPage extends AbstractPage{
     }
 
     public String getCellValue(int i, int j) {
-        return StringUtils.right(driver.findElement(By.xpath("//*[@id=\"table\"]/tbody/tr["+(i+1)+"]/td["+(j+1)+"]/img")).getAttribute("src"),5);
+        return StringUtils.right(driver.findElement(By.xpath("//*[@id=\"table\"]/tbody/tr[" + (i) + "]/td[" + (j) + "]/img")).getAttribute("src"), 5);
     }
 }

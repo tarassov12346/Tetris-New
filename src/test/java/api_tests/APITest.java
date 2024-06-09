@@ -21,7 +21,7 @@ public class APITest extends CommonConditions {
     @DataProvider
     public Object[][] dataProviderMethod() {
         return new Object[][]{
-                {"start"},
+                {"hello"},
                 {"save"},
                 {"restart"},
                 {"0"},
@@ -41,8 +41,24 @@ public class APITest extends CommonConditions {
     @Test(description = "checks if the Game is ON should appear after 'start' request is sent")
     public void shouldGameIsONAppear() {
         log.info("shouldGameIsONAppear Test start");
-        Response response =
+
+        Response responseToHello =
                 given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("hello")
+                        .then()
+                        .extract()
+                        .response();
+
+        String id = responseToHello.sessionId();
+
+
+
+
+
+        Response response =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
                         .when()
                         .get("start")
                         .then()
@@ -66,8 +82,23 @@ public class APITest extends CommonConditions {
         list.add("Bonny");
         list.add("Ira");
         list.add("Wolfy");
-        Response response =
+
+        Response responseToHello =
                 given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("hello")
+                        .then()
+                        .extract()
+                        .response();
+
+        String id = responseToHello.sessionId();
+
+
+
+
+        Response response =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
                         .when()
                         .get("start")
                         .then()
@@ -90,8 +121,24 @@ public class APITest extends CommonConditions {
         log.info("shouldTetraminoImageAppear Test start");
         boolean isTetraminoImagePresent = false;
         String[] images = {"I.png", "J.png", "K.png", "L.png", "O.png", "S.png", "T.png", "Z.png"};
-        Response response =
+
+
+        Response responseToHello =
                 given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("hello")
+                        .then()
+                        .extract()
+                        .response();
+
+        String id = responseToHello.sessionId();
+
+
+
+
+        Response response =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
                         .when()
                         .get("start")
                         .then()
@@ -119,15 +166,36 @@ public class APITest extends CommonConditions {
     @Test(description = "checks if the tetramino image should move 1 step down after '0' request is sent")
     public void shouldTetraminoImageMoveDown() {
         log.info("shouldTetraminoImageMoveDown Test start");
-        Response responseToStart =
+
+
+
+        Response responseToHello =
                 given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("hello")
+                        .then()
+                        .extract()
+                        .response();
+
+        String id = responseToHello.sessionId();
+
+
+
+
+
+
+
+
+        Response responseToStart =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
                         .when()
                         .get("start")
                         .then()
                         .extract()
                         .response();
         String bodyResponseToStartTxt = responseToStart.getBody().asString();
-        String id = responseToStart.sessionId();
+
         Response responseToDown =
                 given().sessionId(id)
                         .baseUri("http://localhost:9090/")
@@ -143,15 +211,34 @@ public class APITest extends CommonConditions {
     @Test(description = "checks if the tetramino image should move 1 position left after '2' request is sent")
     public void shouldTetraminoImageMoveLeft() {
         log.info("shouldTetraminoImageMoveLeft Test start");
-        Response responseToStart =
+
+
+
+        Response responseToHello =
                 given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("hello")
+                        .then()
+                        .extract()
+                        .response();
+
+        String id = responseToHello.sessionId();
+
+
+
+
+
+
+        Response responseToStart =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
                         .when()
                         .get("start")
                         .then()
                         .extract()
                         .response();
         String bodyResponseToStartTxt = responseToStart.getBody().asString();
-        String id = responseToStart.sessionId();
+
         Response responseToMoveLeft =
                 given().sessionId(id)
                         .baseUri("http://localhost:9090/")
@@ -167,15 +254,32 @@ public class APITest extends CommonConditions {
     @Test(description = "checks if the tetramino image should move 1 position right after '3' request is sent")
     public void shouldTetraminoImageMoveRight() {
         log.info("shouldTetraminoImageMoveRight Test start");
-        Response responseToStart =
+
+
+        Response responseToHello =
                 given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("hello")
+                        .then()
+                        .extract()
+                        .response();
+
+        String id = responseToHello.sessionId();
+
+
+
+
+
+        Response responseToStart =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
                         .when()
                         .get("start")
                         .then()
                         .extract()
                         .response();
         String bodyResponseToStartTxt = responseToStart.getBody().asString();
-        String id = responseToStart.sessionId();
+
         Response responseToMoveRight =
                 given().sessionId(id)
                         .baseUri("http://localhost:9090/")
@@ -191,14 +295,29 @@ public class APITest extends CommonConditions {
     @Test(description = "checks if the tetramino image should rotate after '1' request is sent")
     public void shouldTetraminoImageRotate() {
         log.info("shouldTetraminoImageRotate Test start");
-        Response responseToStart =
+
+
+        Response responseToHello =
                 given().baseUri("http://localhost:9090/")
+                        .when()
+                        .get("hello")
+                        .then()
+                        .extract()
+                        .response();
+
+        String id = responseToHello.sessionId();
+
+
+
+        Response responseToStart =
+                given().sessionId(id)
+                        .baseUri("http://localhost:9090/")
                         .when()
                         .get("start")
                         .then()
                         .extract()
                         .response();
-        String id = responseToStart.sessionId();
+
         Response responseToRotate =
                 given().sessionId(id)
                         .baseUri("http://localhost:9090/")
