@@ -95,9 +95,16 @@ public class StepDefinitionsForSave {
 
     @When("player presses Restart button")
     public void playerPressesRestartButton() {
-        tetrisPage = tetrisPage.clickRestartButton().clickRestartButton();
+        tetrisPage = tetrisPage.clickRestartButton();
+
+        if (tetrisPage.getRestartButton().isDisplayed()) tetrisPage.clickRestartButton();
+
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("clearInterval(myTimer);");
+        makeUserWait(5);
+
+
+
         filledCellsListAfterRestart = getFilledCells();
         log.info("filledCellsList after restart:");
         log.info(Arrays.toString(filledCellsListAfterRestart.toArray()));
@@ -107,6 +114,7 @@ public class StepDefinitionsForSave {
         restartedPlayerScore = tetrisPage.getPlayerScore();
         log.info("Player Score after restart:");
         log.info(restartedPlayerScore);
+
     }
 
     @Then("mosaic of fallen tetraminos changes into that as it was when Save button was pressed during previous game")
@@ -142,7 +150,7 @@ public class StepDefinitionsForSave {
 
     private List<Pair<Integer, Integer>> getFilledCells() {
         List<Pair<Integer, Integer>> filledCellsCoordinatesList = new ArrayList<>();
-        for (int i = 1; i < 20; i++) {
+        for (int i = 10; i < 20; i++) {
             for (int j = 1; j < 12; j++) {
                 if (!tetrisPage.getCellValue(i, j).equals("0.png")) {
                     filledCellsCoordinatesList.add(new Pair(i, j));

@@ -21,12 +21,13 @@ public class CommonConditions {
     String savedPlayerScore;
     String restartedPLayerName;
     String restartedPlayerScore;
+    GameService gameService;
 
     @BeforeClass
     public void doBeforeTests() {
         log.info("UITests start");
         driver = DriverSingleton.getDriver();
-        GameService gameService = new GameService(driver);
+        gameService = new GameService(driver);
         savedGameCells = gameService.getFilledCellsListSaved();
         restartedGameCells = gameService.getFilledCellsListAfterRestart();
         savedPLayerName = gameService.savedPLayerName;
@@ -48,5 +49,6 @@ public class CommonConditions {
     @AfterClass
     public void doAfterTests() {
         log.info("UITests are finished");
+        //  gameService.closeBrowser();
     }
 }

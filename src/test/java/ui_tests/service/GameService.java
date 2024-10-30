@@ -42,6 +42,7 @@ public class GameService {
 
     public List<Pair<Integer, Integer>> getFilledCellsListAfterRestart() {
         runScenarioAfterGameSaving();
+        pauseScene();
         List<Pair<Integer, Integer>> filledCellsListAfterRestart = getFilledCells();
         log.info("filledCellsList after restart:");
         log.info(Arrays.toString(filledCellsListAfterRestart.toArray()));
@@ -56,7 +57,7 @@ public class GameService {
 
     private List<Pair<Integer, Integer>> getFilledCells() {
         List<Pair<Integer, Integer>> filledCellsCoordinatesList = new ArrayList<>();
-        for (int i = 1; i < 20; i++) {
+        for (int i = 10; i < 20; i++) {
             for (int j = 1; j < 12; j++) {
                 if (!tetrisPage.getCellValue(i, j).equals("0.png")) {
                     filledCellsCoordinatesList.add(new Pair(i, j));
@@ -88,19 +89,30 @@ public class GameService {
     }
 
     private void runScenarioAfterGameSaving() {
-        //  tetrisPage = tetrisPage.openPage();
+        //    tetrisPage = tetrisPage.openPage();
+        makeUserWait(5);
         tetrisPage = tetrisPage.clickNewGameButton();
-        makeUserWait(3);
+        makeUserWait(5);
         tetrisPage = tetrisPage.clickStartGameButton();
         makeUserWait(3);
         tetrisPage = tetrisPage.clickRightButton().clickRightButton().clickDropButton();
         makeUserWait(3);
         tetrisPage = tetrisPage.clickDropButton();
         makeUserWait(3);
-        tetrisPage = tetrisPage.clickRestartButton().clickRestartButton();
+        tetrisPage = tetrisPage.clickRestartButton();
+        makeUserWait(3);
+
+    }
+
+    public void closeBrowser() {
+        driver.close();
+    }
+
+    private void pauseScene() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("clearInterval(myTimer);");
     }
+
 
     private void makeUserWait(int second) {
         try {

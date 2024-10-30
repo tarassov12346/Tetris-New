@@ -121,6 +121,21 @@ public class TetrisPage extends AbstractPage {
     }
 
     public String getCellValue(int i, int j) {
-        return StringUtils.right(driver.findElement(By.xpath("//*[@id=\"table\"]/tbody/tr[" + (i) + "]/td[" + (j) + "]/img")).getAttribute("src"), 5);
+        return StringUtils.right(driver.findElement(By.id("c"+i+"v"+j)).getAttribute("src"), 5);
+                //StringUtils.right(driver.findElement(By.xpath("//*[@id=\"table\"]/tbody/tr[" + (i) + "]/td[" + (j) + "]/img")).getAttribute("src"), 5);
     }
+
+    public WebElement getRestartButton() {
+        return restartButton;
+    }
+
+    public WebElement getStartGameButton() {
+        return startGameButton;
+    }
+
+    public WebElement getNewGameButton() {
+        return newGameButton;
+    }
+
+
 }
